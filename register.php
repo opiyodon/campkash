@@ -7,7 +7,8 @@
         <h2 style="margin-bottom: 20px; color: #aaa; text-align: center;">Register</h2>
         <form action="php/functions/register.php" method="POST" enctype="multipart/form-data">
             <!-- Hidden input field for admin -->
-            <input type="hidden" id="admin" name="admin" value="<?php echo $_SESSION['role']; ?>">
+            <input type="hiddenn" id="admin" name="admin"
+                value="<?php echo (isset($_SESSION['admin']) && $_SESSION['admin'] == 'admin') ? 'yes' : 'no'; ?>">
             <div class="form-group">
                 <label for="userProfile" class="label">Profile Picture:</label>
                 <input type="file" id="userProfile" name="userProfile" class="input">

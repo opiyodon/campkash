@@ -49,6 +49,9 @@
                 </li>
             </a>
         </ul>
+        <a href="register.php">
+            <p>Register New Admin</p>
+        </a>
         <a class="logout" href="logout.php">
             <p>Logout</p>
         </a>

@@ -13,6 +13,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $password = md5($_POST['password']); //password encryption with md5
     $email = $_POST["email"];
     $dateofbirth = $_POST["dateofbirth"];
+    $admin = $_POST["admin"]; // Set to 'yes' if provided by an admin
 
     //check whether Select Image is clicked or not and upload image only if selected
     if (isset($_FILES['userProfile']['name'])) {
@@ -57,14 +58,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
     }
 
-    // Determine if the new user is an admin
-    $isAdmin = 'no'; // Default to 'no'
-    if (isset($_SESSION['user']) && $_SESSION['role'] == 'admin' && isset($_POST['admin'])) {
-        $isAdmin = $_POST['admin']; // Set to 'yes' if provided by an admin
-    }
-
     // Prepare the SQL query
-    $sql = "INSERT INTO users (fullname, username, userProfile, email, phone_no, id_no, religion, gender, reg_no, dateofbirth, password, admin) VALUES ('$fullname', '$username', '$image_name', '$email', '$phone_no', '$id_no', '$religion', '$gender', '$reg_no', '$dateofbirth', '$password', '$isAdmin')";
+    $sql = "INSERT INTO users (fullname, username, userProfile, email, phone_no, id_no, religion, gender, reg_no, dateofbirth, password, admin) VALUES ('$fullname', '$username', '$image_name', '$email', '$phone_no', '$id_no', '$religion', '$gender', '$reg_no', '$dateofbirth', '$password', '$admin')";
 
     // Execute the query and provide feedback
     if (mysqli_query($conn, $sql)) {

@@ -15,14 +15,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // User exists, start a new session
         $row = mysqli_fetch_assoc($result);
         $user_id = $row['id'];
-        $is_admin = $row['admin'] === 'yes'; // Check if the user is an admin
+        $admin = $row['admin'] === 'yes'; // Check if the user is an admin
         $_SESSION['user'] = $username;
         $_SESSION['user_id'] = $user_id;
-        $_SESSION['is_admin'] = $is_admin; // Store the admin status in the session
+        $_SESSION['admin'] = $admin; // Store the admin status in the session
         $_SESSION['login'] = "<div class='SUCCESS'>Login Successful</div>";
 
-        // Redirect based on admin checkbox and user role
-        if ($isAdminChecked && $is_admin) {
+        // Redirect based on admin checkbox and user admin
+        if ($isAdminChecked && $admin) {
             // Redirect to the admin dashboard
             header('location:' . SITEURL . 'admin_dashboard.php');
         } else {
