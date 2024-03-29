@@ -9,3 +9,4 @@ if (!isset($_SESSION['user'])) {
 
 // Store the user_id from the session for easy access throughout the website
 $user_id = $_SESSION['user_id'];
+$admin = $_SESSION['admin'];

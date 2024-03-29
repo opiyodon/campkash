@@ -18,7 +18,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $admin = $row['admin'] === 'yes'; // Check if the user is an admin
         $_SESSION['user'] = $username;
         $_SESSION['user_id'] = $user_id;
-        $_SESSION['admin'] = $admin; // Store the admin status in the session
+        $_SESSION['admin'] = $admin ? 'admin' : 'user'; // Store the admin status in the session
         $_SESSION['login'] = "<div class='SUCCESS'>Login Successful</div>";
 
         // Redirect based on admin checkbox and user admin
