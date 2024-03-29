@@ -1,0 +1,36 @@
+- index.php
+- about.php
+- services.php
+- contact.php
+- register.php
+- login.php
+- forgot_password.php
+- reset_password.php
+- profile.php
+- admin_dashboard.php
+- assets/
+  - css/
+    - style.css
+  - img/
+    - logo.jpg
+  - js/
+    - script.js
+  - php/
+    - config.php
+    - partials/
+      - footer.php
+      - login_check.php
+      - loginFooter.php
+      - loginNav.php
+      - nav.php
+    - functions/
+      - index.php
+      - about.php
+      - services.php
+      - contact.php
+      - register.php
+      - login.php
+      - forgot_password.php
+      - reset_password.php
+      - profile.php
+      - admin_dashboard.php
