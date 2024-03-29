@@ -7,7 +7,6 @@
 </footer>
 
 <script src="js/script.js"></script>
-<script src="js/alert.js"></script>
 
 </body>
 

@@ -556,7 +556,7 @@ select:focus {
     align-items: center;
 }
 
-.user-profile {
+.profileBox {
     display: flex;
     align-items: center;
     gap: 5px;
@@ -576,12 +576,19 @@ select:focus {
     position: absolute;
     top: 70px;
     right: 0;
-    display: none;
-    flex-direction: column;
     background: #333;
     width: fit-content;
     box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
     z-index: 1;
+}
+
+.dropdown-open {
+    display: flex;
+    flex-direction: column;
+}
+
+.dropdown-close {
+    display: none;
 }
 
 .dropdown-content a {
