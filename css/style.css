@@ -556,7 +556,7 @@ select:focus {
     align-items: center;
 }
 
-.user-profile {
+.profileBox {
     display: flex;
     align-items: center;
     gap: 5px;
@@ -564,8 +564,6 @@ select:focus {
     font-weight: 700;
     cursor: pointer;
 }
-
-.profileBox 
 
 .profile-pic {
     width: 35px;
@@ -597,10 +595,17 @@ select:focus {
     color: white;
     font-weight: normal;
     padding: 20px 70px;
+    display: block;
+    white-space: nowrap;
 }
 
-.dropdown-content a:hover {
-    background: #1f1e1e;
+/* Specific hover style for the logout button */
+.dropdown-logout:hover {
+    background: red;
+}
+
+.profileBtn a:hover {
+    background: #333;
 }
 
 /* Dashboard Row */
@@ -680,6 +685,167 @@ select:focus {
 
 .main-content section.active-section {
     display: block;
+}
+
+/* Dashboard */
+
+/* My Loans */
+#loan-summary table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+#loan-summary th,
+#loan-summary td {
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+#loan-summary th {
+    font-weight: bold;
+}
+
+#loan-summary tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+/* Repay Loan */
+.loan-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+}
+
+.loan-item {
+    background-color: #ffffff;
+    padding: 15px;
+    border-radius: 5px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    margin-right: 20px;
+    margin-bottom: 20px;
+    width: calc(50% - 20px);
+}
+
+/* Repayment form styles */
+#repayment-form {
+    margin-top: 20px;
+}
+
+#repayment-form label,
+#repayment-form input,
+#repayment-form button {
+    display: block;
+    margin-bottom: 10px;
+}
+
+#repayment-form input[type="number"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+#repayment-form button {
+    background-color: #007bff;
+    color: #ffffff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#repayment-form button:hover {
+    background-color: #0056b3;
+}
+
+/* Request Loan */
+#loan-request-form {
+    margin-top: 20px;
+}
+
+#loan-request-form label,
+#loan-request-form input,
+#loan-request-form button {
+    display: block;
+    margin-bottom: 10px;
+}
+
+#loan-request-form input[type="number"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+#loan-request-form button {
+    background-color: #007bff;
+    color: #ffffff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#loan-request-form button:hover {
+    background-color: #0056b3;
+}
+
+/* Profile Section*/
+.profile-card {
+    background-color: #ffffff;
+    padding: 15px;
+    border-radius: 5px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.profile-card img {
+    max-width: 100px;
+    border-radius: 50%;
+    margin-bottom: 10px;
+}
+
+.profile-card h3 {
+    color: #333;
+    margin-bottom: 5px;
+}
+
+.profile-card p {
+    color: #666;
+    margin-bottom: 5px;
+}
+
+/* Password update form styles */
+#password-update-form {
+    margin-top: 20px;
+}
+
+#password-update-form label,
+#password-update-form input,
+#password-update-form button {
+    display: block;
+    margin-bottom: 10px;
+}
+
+#password-update-form input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+#password-update-form button {
+    background-color: #007bff;
+    color: #ffffff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#password-update-form button:hover {
+    background-color: #0056b3;
 }
 
 /* Footer */

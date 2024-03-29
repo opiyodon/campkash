@@ -85,8 +85,9 @@
                 <div class="card">
                     <h3>Loan Balance</h3>
                     <p>Your current outstanding loan balance is: <strong>KES 350,000</strong></p>
-                    <!-- Graph/Chart Placeholder -->
-                    <canvas id="balance-chart"></canvas>
+                    <div>
+                        <canvas id="myChart"></canvas>
+                    </div>
                 </div>
             </div>
         </section>
@@ -94,665 +95,99 @@
         <!-- Loan Summary Section -->
         <section id="loan-summary">
             <h2>Loan Summary</h2>
-            <p>Your current loan balance is $3,500. You have successfully paid 5 out of 10 installments. Keep up the
-                good
-                work!</p>
-
-            <div>
-                <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum non ducimus nam perspiciatis possimus
-                    reiciendis ullam alias est doloribus, explicabo tempora! Repudiandae assumenda officia culpa eveniet
-                    optio exercitationem distinctio molestias?
-                </p>
-                <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum non ducimus nam perspiciatis possimus
-                    reiciendis ullam alias est doloribus, explicabo tempora! Repudiandae assumenda officia culpa eveniet
-                    optio exercitationem distinctio molestias?
-                </p>
-                <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum non ducimus nam perspiciatis possimus
-                    reiciendis ullam alias est doloribus, explicabo tempora! Repudiandae assumenda officia culpa eveniet
-                    optio exercitationem distinctio molestias?
-                </p>
-                <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum non ducimus nam perspiciatis possimus
-                    reiciendis ullam alias est doloribus, explicabo tempora! Repudiandae assumenda officia culpa eveniet
-                    optio exercitationem distinctio molestias?
-                </p>
-                <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum non ducimus nam perspiciatis possimus
-                    reiciendis ullam alias est doloribus, explicabo tempora! Repudiandae assumenda officia culpa eveniet
-                    optio exercitationem distinctio molestias?
-                </p>
-                <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum non ducimus nam perspiciatis possimus
-                    reiciendis ullam alias est doloribus, explicabo tempora! Repudiandae assumenda officia culpa eveniet
-                    optio exercitationem distinctio molestias?
-                </p>
-                <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum non ducimus nam perspiciatis possimus
-                    reiciendis ullam alias est doloribus, explicabo tempora! Repudiandae assumenda officia culpa eveniet
-                    optio exercitationem distinctio molestias?
-                </p>
-                <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum non ducimus nam perspiciatis possimus
-                    reiciendis ullam alias est doloribus, explicabo tempora! Repudiandae assumenda officia culpa eveniet
-                    optio exercitationem distinctio molestias?
-                </p>
-                <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum non ducimus nam perspiciatis possimus
-                    reiciendis ullam alias est doloribus, explicabo tempora! Repudiandae assumenda officia culpa eveniet
-                    optio exercitationem distinctio molestias?
-                </p>
-                <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum non ducimus nam perspiciatis possimus
-                    reiciendis ullam alias est doloribus, explicabo tempora! Repudiandae assumenda officia culpa eveniet
-                    optio exercitationem distinctio molestias?
-                </p>
-                <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum non ducimus nam perspiciatis possimus
-                    reiciendis ullam alias est doloribus, explicabo tempora! Repudiandae assumenda officia culpa eveniet
-                    optio exercitationem distinctio molestias?
-                </p>
-                <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum non ducimus nam perspiciatis possimus
-                    reiciendis ullam alias est doloribus, explicabo tempora! Repudiandae assumenda officia culpa eveniet
-                    optio exercitationem distinctio molestias?
-                </p>
-                <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum non ducimus nam perspiciatis possimus
-                    reiciendis ullam alias est doloribus, explicabo tempora! Repudiandae assumenda officia culpa eveniet
-                    optio exercitationem distinctio molestias?
-                </p>
-                <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum non ducimus nam perspiciatis possimus
-                    reiciendis ullam alias est doloribus, explicabo tempora! Repudiandae assumenda officia culpa eveniet
-                    optio exercitationem distinctio molestias?
-                </p>
-                <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum non ducimus nam perspiciatis possimus
-                    reiciendis ullam alias est doloribus, explicabo tempora! Repudiandae assumenda officia culpa eveniet
-                    optio exercitationem distinctio molestias?
-                </p>
-                <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum non ducimus nam perspiciatis possimus
-                    reiciendis ullam alias est doloribus, explicabo tempora! Repudiandae assumenda officia culpa eveniet
-                    optio exercitationem distinctio molestias?
-                </p>
-                <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum non ducimus nam perspiciatis possimus
-                    reiciendis ullam alias est doloribus, explicabo tempora! Repudiandae assumenda officia culpa eveniet
-                    optio exercitationem distinctio molestias?
-                </p>
-                <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum non ducimus nam perspiciatis possimus
-                    reiciendis ullam alias est doloribus, explicabo tempora! Repudiandae assumenda officia culpa eveniet
-                    optio exercitationem distinctio molestias?
-                </p>
-                <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum non ducimus nam perspiciatis possimus
-                    reiciendis ullam alias est doloribus, explicabo tempora! Repudiandae assumenda officia culpa eveniet
-                    optio exercitationem distinctio molestias?
-                </p>
-                <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum non ducimus nam perspiciatis possimus
-                    reiciendis ullam alias est doloribus, explicabo tempora! Repudiandae assumenda officia culpa eveniet
-                    optio exercitationem distinctio molestias?
-                </p>
-                <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum non ducimus nam perspiciatis possimus
-                    reiciendis ullam alias est doloribus, explicabo tempora! Repudiandae assumenda officia culpa eveniet
-                    optio exercitationem distinctio molestias?
-                </p>
-                <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum non ducimus nam perspiciatis possimus
-                    reiciendis ullam alias est doloribus, explicabo tempora! Repudiandae assumenda officia culpa eveniet
-                    optio exercitationem distinctio molestias?
-                </p>
-                <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum non ducimus nam perspiciatis possimus
-                    reiciendis ullam alias est doloribus, explicabo tempora! Repudiandae assumenda officia culpa eveniet
-                    optio exercitationem distinctio molestias?
-                </p>
-                <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum non ducimus nam perspiciatis possimus
-                    reiciendis ullam alias est doloribus, explicabo tempora! Repudiandae assumenda officia culpa eveniet
-                    optio exercitationem distinctio molestias?
-                </p>
-                <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum non ducimus nam perspiciatis possimus
-                    reiciendis ullam alias est doloribus, explicabo tempora! Repudiandae assumenda officia culpa eveniet
-                    optio exercitationem distinctio molestias?
-                </p>
-                <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum non ducimus nam perspiciatis possimus
-                    reiciendis ullam alias est doloribus, explicabo tempora! Repudiandae assumenda officia culpa eveniet
-                    optio exercitationem distinctio molestias?
-                </p>
-                <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum non ducimus nam perspiciatis possimus
-                    reiciendis ullam alias est doloribus, explicabo tempora! Repudiandae assumenda officia culpa eveniet
-                    optio exercitationem distinctio molestias?
-                </p>
-                <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum non ducimus nam perspiciatis possimus
-                    reiciendis ullam alias est doloribus, explicabo tempora! Repudiandae assumenda officia culpa eveniet
-                    optio exercitationem distinctio molestias?
-                </p>
-                <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum non ducimus nam perspiciatis possimus
-                    reiciendis ullam alias est doloribus, explicabo tempora! Repudiandae assumenda officia culpa eveniet
-                    optio exercitationem distinctio molestias?
-                </p>
-                <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum non ducimus nam perspiciatis possimus
-                    reiciendis ullam alias est doloribus, explicabo tempora! Repudiandae assumenda officia culpa eveniet
-                    optio exercitationem distinctio molestias?
-                </p>
-                <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum non ducimus nam perspiciatis possimus
-                    reiciendis ullam alias est doloribus, explicabo tempora! Repudiandae assumenda officia culpa eveniet
-                    optio exercitationem distinctio molestias?
-                </p>
-            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Loan Name</th>
+                        <th>Loan Amount</th>
+                        <th>Total Installments</th>
+                        <th>Installments Paid</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Student Loan A</td>
+                        <td>$5,000</td>
+                        <td>10</td>
+                        <td>5</td>
+                        <td>In Progress</td>
+                    </tr>
+                    <tr>
+                        <td>Emergency Loan</td>
+                        <td>$2,000</td>
+                        <td>6</td>
+                        <td>6</td>
+                        <td>Cleared</td>
+                    </tr>
+                    <!-- Add more rows for other loans -->
+                </tbody>
+            </table>
         </section>
 
         <!-- Repay Loan Section -->
         <section id="repay-loan">
             <h2>Repay Your Loan</h2>
             <p>Ready to make a payment? Enter the amount you wish to pay and confirm your transaction. Thank you for
-                your
-                timely repayments!</p>
-
-            <div>
-                <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum non ducimus nam perspiciatis possimus
-                    reiciendis ullam alias est doloribus, explicabo tempora! Repudiandae assumenda officia culpa eveniet
-                    optio exercitationem distinctio molestias?
-                </p>
-                <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum non ducimus nam perspiciatis possimus
-                    reiciendis ullam alias est doloribus, explicabo tempora! Repudiandae assumenda officia culpa eveniet
-                    optio exercitationem distinctio molestias?
-                </p>
-                <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum non ducimus nam perspiciatis possimus
-                    reiciendis ullam alias est doloribus, explicabo tempora! Repudiandae assumenda officia culpa eveniet
-                    optio exercitationem distinctio molestias?
-                </p>
-                <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum non ducimus nam perspiciatis possimus
-                    reiciendis ullam alias est doloribus, explicabo tempora! Repudiandae assumenda officia culpa eveniet
-                    optio exercitationem distinctio molestias?
-                </p>
-                <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum non ducimus nam perspiciatis possimus
-                    reiciendis ullam alias est doloribus, explicabo tempora! Repudiandae assumenda officia culpa eveniet
-                    optio exercitationem distinctio molestias?
-                </p>
-                <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum non ducimus nam perspiciatis possimus
-                    reiciendis ullam alias est doloribus, explicabo tempora! Repudiandae assumenda officia culpa eveniet
-                    optio exercitationem distinctio molestias?
-                </p>
-                <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum non ducimus nam perspiciatis possimus
-                    reiciendis ullam alias est doloribus, explicabo tempora! Repudiandae assumenda officia culpa eveniet
-                    optio exercitationem distinctio molestias?
-                </p>
-                <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum non ducimus nam perspiciatis possimus
-                    reiciendis ullam alias est doloribus, explicabo tempora! Repudiandae assumenda officia culpa eveniet
-                    optio exercitationem distinctio molestias?
-                </p>
-                <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum non ducimus nam perspiciatis possimus
-                    reiciendis ullam alias est doloribus, explicabo tempora! Repudiandae assumenda officia culpa eveniet
-                    optio exercitationem distinctio molestias?
-                </p>
-                <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum non ducimus nam perspiciatis possimus
-                    reiciendis ullam alias est doloribus, explicabo tempora! Repudiandae assumenda officia culpa eveniet
-                    optio exercitationem distinctio molestias?
-                </p>
-                <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum non ducimus nam perspiciatis possimus
-                    reiciendis ullam alias est doloribus, explicabo tempora! Repudiandae assumenda officia culpa eveniet
-                    optio exercitationem distinctio molestias?
-                </p>
-                <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum non ducimus nam perspiciatis possimus
-                    reiciendis ullam alias est doloribus, explicabo tempora! Repudiandae assumenda officia culpa eveniet
-                    optio exercitationem distinctio molestias?
-                </p>
-                <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum non ducimus nam perspiciatis possimus
-                    reiciendis ullam alias est doloribus, explicabo tempora! Repudiandae assumenda officia culpa eveniet
-                    optio exercitationem distinctio molestias?
-                </p>
-                <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum non ducimus nam perspiciatis possimus
-                    reiciendis ullam alias est doloribus, explicabo tempora! Repudiandae assumenda officia culpa eveniet
-                    optio exercitationem distinctio molestias?
-                </p>
-                <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum non ducimus nam perspiciatis possimus
-                    reiciendis ullam alias est doloribus, explicabo tempora! Repudiandae assumenda officia culpa eveniet
-                    optio exercitationem distinctio molestias?
-                </p>
-                <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum non ducimus nam perspiciatis possimus
-                    reiciendis ullam alias est doloribus, explicabo tempora! Repudiandae assumenda officia culpa eveniet
-                    optio exercitationem distinctio molestias?
-                </p>
-                <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum non ducimus nam perspiciatis possimus
-                    reiciendis ullam alias est doloribus, explicabo tempora! Repudiandae assumenda officia culpa eveniet
-                    optio exercitationem distinctio molestias?
-                </p>
-                <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum non ducimus nam perspiciatis possimus
-                    reiciendis ullam alias est doloribus, explicabo tempora! Repudiandae assumenda officia culpa eveniet
-                    optio exercitationem distinctio molestias?
-                </p>
-                <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum non ducimus nam perspiciatis possimus
-                    reiciendis ullam alias est doloribus, explicabo tempora! Repudiandae assumenda officia culpa eveniet
-                    optio exercitationem distinctio molestias?
-                </p>
-                <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum non ducimus nam perspiciatis possimus
-                    reiciendis ullam alias est doloribus, explicabo tempora! Repudiandae assumenda officia culpa eveniet
-                    optio exercitationem distinctio molestias?
-                </p>
-                <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum non ducimus nam perspiciatis possimus
-                    reiciendis ullam alias est doloribus, explicabo tempora! Repudiandae assumenda officia culpa eveniet
-                    optio exercitationem distinctio molestias?
-                </p>
-                <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum non ducimus nam perspiciatis possimus
-                    reiciendis ullam alias est doloribus, explicabo tempora! Repudiandae assumenda officia culpa eveniet
-                    optio exercitationem distinctio molestias?
-                </p>
-                <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum non ducimus nam perspiciatis possimus
-                    reiciendis ullam alias est doloribus, explicabo tempora! Repudiandae assumenda officia culpa eveniet
-                    optio exercitationem distinctio molestias?
-                </p>
-                <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum non ducimus nam perspiciatis possimus
-                    reiciendis ullam alias est doloribus, explicabo tempora! Repudiandae assumenda officia culpa eveniet
-                    optio exercitationem distinctio molestias?
-                </p>
-                <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum non ducimus nam perspiciatis possimus
-                    reiciendis ullam alias est doloribus, explicabo tempora! Repudiandae assumenda officia culpa eveniet
-                    optio exercitationem distinctio molestias?
-                </p>
-                <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum non ducimus nam perspiciatis possimus
-                    reiciendis ullam alias est doloribus, explicabo tempora! Repudiandae assumenda officia culpa eveniet
-                    optio exercitationem distinctio molestias?
-                </p>
-                <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum non ducimus nam perspiciatis possimus
-                    reiciendis ullam alias est doloribus, explicabo tempora! Repudiandae assumenda officia culpa eveniet
-                    optio exercitationem distinctio molestias?
-                </p>
-                <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum non ducimus nam perspiciatis possimus
-                    reiciendis ullam alias est doloribus, explicabo tempora! Repudiandae assumenda officia culpa eveniet
-                    optio exercitationem distinctio molestias?
-                </p>
-                <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum non ducimus nam perspiciatis possimus
-                    reiciendis ullam alias est doloribus, explicabo tempora! Repudiandae assumenda officia culpa eveniet
-                    optio exercitationem distinctio molestias?
-                </p>
-                <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum non ducimus nam perspiciatis possimus
-                    reiciendis ullam alias est doloribus, explicabo tempora! Repudiandae assumenda officia culpa eveniet
-                    optio exercitationem distinctio molestias?
-                </p>
-                <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum non ducimus nam perspiciatis possimus
-                    reiciendis ullam alias est doloribus, explicabo tempora! Repudiandae assumenda officia culpa eveniet
-                    optio exercitationem distinctio molestias?
-                </p>
+                your timely repayments!</p>
+            <div class="loan-list">
+                <!-- Loan details for each loan -->
+                <div class="loan-item">
+                    <h3>Student Loan A</h3>
+                    <p>Loan Amount: $5,000</p>
+                    <p>Installments Remaining: 5 out of 10</p>
+                    <button class="repay-button">Repay</button>
+                </div>
+                <div class="loan-item">
+                    <h3>Emergency Loan</h3>
+                    <p>Loan Amount: $2,000</p>
+                    <p>Installments Remaining: 0 (Cleared)</p>
+                    <!-- No repayment button for cleared loan -->
+                </div>
+                <!-- Add more loan items as needed -->
             </div>
-            <!-- Repayment form and details -->
+            <!-- Repayment form -->
+            <form id="repayment-form">
+                <label for="payment-amount">Enter Payment Amount:</label>
+                <input type="number" id="payment-amount" name="payment-amount" min="1" required>
+                <button type="submit" class="confirm-button">Confirm Payment</button>
+            </form>
         </section>
 
         <!-- Request Loan Section -->
         <section id="request-loan">
             <h2>Request a New Loan</h2>
             <p>Need additional funds for your studies? Fill out our simple loan request form and get an approval within
-                24
-                hours.</p>
-
-            <div>
-                <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum non ducimus nam perspiciatis possimus
-                    reiciendis ullam alias est doloribus, explicabo tempora! Repudiandae assumenda officia culpa eveniet
-                    optio exercitationem distinctio molestias?
-                </p>
-                <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum non ducimus nam perspiciatis possimus
-                    reiciendis ullam alias est doloribus, explicabo tempora! Repudiandae assumenda officia culpa eveniet
-                    optio exercitationem distinctio molestias?
-                </p>
-                <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum non ducimus nam perspiciatis possimus
-                    reiciendis ullam alias est doloribus, explicabo tempora! Repudiandae assumenda officia culpa eveniet
-                    optio exercitationem distinctio molestias?
-                </p>
-                <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum non ducimus nam perspiciatis possimus
-                    reiciendis ullam alias est doloribus, explicabo tempora! Repudiandae assumenda officia culpa eveniet
-                    optio exercitationem distinctio molestias?
-                </p>
-                <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum non ducimus nam perspiciatis possimus
-                    reiciendis ullam alias est doloribus, explicabo tempora! Repudiandae assumenda officia culpa eveniet
-                    optio exercitationem distinctio molestias?
-                </p>
-                <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum non ducimus nam perspiciatis possimus
-                    reiciendis ullam alias est doloribus, explicabo tempora! Repudiandae assumenda officia culpa eveniet
-                    optio exercitationem distinctio molestias?
-                </p>
-                <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum non ducimus nam perspiciatis possimus
-                    reiciendis ullam alias est doloribus, explicabo tempora! Repudiandae assumenda officia culpa eveniet
-                    optio exercitationem distinctio molestias?
-                </p>
-                <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum non ducimus nam perspiciatis possimus
-                    reiciendis ullam alias est doloribus, explicabo tempora! Repudiandae assumenda officia culpa eveniet
-                    optio exercitationem distinctio molestias?
-                </p>
-                <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum non ducimus nam perspiciatis possimus
-                    reiciendis ullam alias est doloribus, explicabo tempora! Repudiandae assumenda officia culpa eveniet
-                    optio exercitationem distinctio molestias?
-                </p>
-                <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum non ducimus nam perspiciatis possimus
-                    reiciendis ullam alias est doloribus, explicabo tempora! Repudiandae assumenda officia culpa eveniet
-                    optio exercitationem distinctio molestias?
-                </p>
-                <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum non ducimus nam perspiciatis possimus
-                    reiciendis ullam alias est doloribus, explicabo tempora! Repudiandae assumenda officia culpa eveniet
-                    optio exercitationem distinctio molestias?
-                </p>
-                <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum non ducimus nam perspiciatis possimus
-                    reiciendis ullam alias est doloribus, explicabo tempora! Repudiandae assumenda officia culpa eveniet
-                    optio exercitationem distinctio molestias?
-                </p>
-                <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum non ducimus nam perspiciatis possimus
-                    reiciendis ullam alias est doloribus, explicabo tempora! Repudiandae assumenda officia culpa eveniet
-                    optio exercitationem distinctio molestias?
-                </p>
-                <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum non ducimus nam perspiciatis possimus
-                    reiciendis ullam alias est doloribus, explicabo tempora! Repudiandae assumenda officia culpa eveniet
-                    optio exercitationem distinctio molestias?
-                </p>
-                <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum non ducimus nam perspiciatis possimus
-                    reiciendis ullam alias est doloribus, explicabo tempora! Repudiandae assumenda officia culpa eveniet
-                    optio exercitationem distinctio molestias?
-                </p>
-                <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum non ducimus nam perspiciatis possimus
-                    reiciendis ullam alias est doloribus, explicabo tempora! Repudiandae assumenda officia culpa eveniet
-                    optio exercitationem distinctio molestias?
-                </p>
-                <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum non ducimus nam perspiciatis possimus
-                    reiciendis ullam alias est doloribus, explicabo tempora! Repudiandae assumenda officia culpa eveniet
-                    optio exercitationem distinctio molestias?
-                </p>
-                <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum non ducimus nam perspiciatis possimus
-                    reiciendis ullam alias est doloribus, explicabo tempora! Repudiandae assumenda officia culpa eveniet
-                    optio exercitationem distinctio molestias?
-                </p>
-                <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum non ducimus nam perspiciatis possimus
-                    reiciendis ullam alias est doloribus, explicabo tempora! Repudiandae assumenda officia culpa eveniet
-                    optio exercitationem distinctio molestias?
-                </p>
-                <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum non ducimus nam perspiciatis possimus
-                    reiciendis ullam alias est doloribus, explicabo tempora! Repudiandae assumenda officia culpa eveniet
-                    optio exercitationem distinctio molestias?
-                </p>
-                <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum non ducimus nam perspiciatis possimus
-                    reiciendis ullam alias est doloribus, explicabo tempora! Repudiandae assumenda officia culpa eveniet
-                    optio exercitationem distinctio molestias?
-                </p>
-                <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum non ducimus nam perspiciatis possimus
-                    reiciendis ullam alias est doloribus, explicabo tempora! Repudiandae assumenda officia culpa eveniet
-                    optio exercitationem distinctio molestias?
-                </p>
-                <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum non ducimus nam perspiciatis possimus
-                    reiciendis ullam alias est doloribus, explicabo tempora! Repudiandae assumenda officia culpa eveniet
-                    optio exercitationem distinctio molestias?
-                </p>
-                <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum non ducimus nam perspiciatis possimus
-                    reiciendis ullam alias est doloribus, explicabo tempora! Repudiandae assumenda officia culpa eveniet
-                    optio exercitationem distinctio molestias?
-                </p>
-                <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum non ducimus nam perspiciatis possimus
-                    reiciendis ullam alias est doloribus, explicabo tempora! Repudiandae assumenda officia culpa eveniet
-                    optio exercitationem distinctio molestias?
-                </p>
-                <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum non ducimus nam perspiciatis possimus
-                    reiciendis ullam alias est doloribus, explicabo tempora! Repudiandae assumenda officia culpa eveniet
-                    optio exercitationem distinctio molestias?
-                </p>
-                <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum non ducimus nam perspiciatis possimus
-                    reiciendis ullam alias est doloribus, explicabo tempora! Repudiandae assumenda officia culpa eveniet
-                    optio exercitationem distinctio molestias?
-                </p>
-                <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum non ducimus nam perspiciatis possimus
-                    reiciendis ullam alias est doloribus, explicabo tempora! Repudiandae assumenda officia culpa eveniet
-                    optio exercitationem distinctio molestias?
-                </p>
-                <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum non ducimus nam perspiciatis possimus
-                    reiciendis ullam alias est doloribus, explicabo tempora! Repudiandae assumenda officia culpa eveniet
-                    optio exercitationem distinctio molestias?
-                </p>
-                <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum non ducimus nam perspiciatis possimus
-                    reiciendis ullam alias est doloribus, explicabo tempora! Repudiandae assumenda officia culpa eveniet
-                    optio exercitationem distinctio molestias?
-                </p>
-                <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum non ducimus nam perspiciatis possimus
-                    reiciendis ullam alias est doloribus, explicabo tempora! Repudiandae assumenda officia culpa eveniet
-                    optio exercitationem distinctio molestias?
-                </p>
-            </div>
-            <!-- Loan request form -->
+                24 hours.</p>
+            <form id="loan-request-form">
+                <label for="loan-amount">Loan Amount:</label>
+                <input type="number" id="loan-amount" name="loan-amount" min="1" required>
+                <label for="installments">Number of Installments:</label>
+                <input type="number" id="installments" name="installments" min="1" required>
+                <button type="submit" class="request-button">Submit Request</button>
+            </form>
         </section>
 
         <!-- Profile Section -->
         <section id="profile">
             <h2>Profile</h2>
-            <p>Change your profile.</p>
-
-            <div>
-                <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum non ducimus nam perspiciatis possimus
-                    reiciendis ullam alias est doloribus, explicabo tempora! Repudiandae assumenda officia culpa eveniet
-                    optio exercitationem distinctio molestias?
-                </p>
-                <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum non ducimus nam perspiciatis possimus
-                    reiciendis ullam alias est doloribus, explicabo tempora! Repudiandae assumenda officia culpa eveniet
-                    optio exercitationem distinctio molestias?
-                </p>
-                <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum non ducimus nam perspiciatis possimus
-                    reiciendis ullam alias est doloribus, explicabo tempora! Repudiandae assumenda officia culpa eveniet
-                    optio exercitationem distinctio molestias?
-                </p>
-                <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum non ducimus nam perspiciatis possimus
-                    reiciendis ullam alias est doloribus, explicabo tempora! Repudiandae assumenda officia culpa eveniet
-                    optio exercitationem distinctio molestias?
-                </p>
-                <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum non ducimus nam perspiciatis possimus
-                    reiciendis ullam alias est doloribus, explicabo tempora! Repudiandae assumenda officia culpa eveniet
-                    optio exercitationem distinctio molestias?
-                </p>
-                <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum non ducimus nam perspiciatis possimus
-                    reiciendis ullam alias est doloribus, explicabo tempora! Repudiandae assumenda officia culpa eveniet
-                    optio exercitationem distinctio molestias?
-                </p>
-                <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum non ducimus nam perspiciatis possimus
-                    reiciendis ullam alias est doloribus, explicabo tempora! Repudiandae assumenda officia culpa eveniet
-                    optio exercitationem distinctio molestias?
-                </p>
-                <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum non ducimus nam perspiciatis possimus
-                    reiciendis ullam alias est doloribus, explicabo tempora! Repudiandae assumenda officia culpa eveniet
-                    optio exercitationem distinctio molestias?
-                </p>
-                <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum non ducimus nam perspiciatis possimus
-                    reiciendis ullam alias est doloribus, explicabo tempora! Repudiandae assumenda officia culpa eveniet
-                    optio exercitationem distinctio molestias?
-                </p>
-                <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum non ducimus nam perspiciatis possimus
-                    reiciendis ullam alias est doloribus, explicabo tempora! Repudiandae assumenda officia culpa eveniet
-                    optio exercitationem distinctio molestias?
-                </p>
-                <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum non ducimus nam perspiciatis possimus
-                    reiciendis ullam alias est doloribus, explicabo tempora! Repudiandae assumenda officia culpa eveniet
-                    optio exercitationem distinctio molestias?
-                </p>
-                <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum non ducimus nam perspiciatis possimus
-                    reiciendis ullam alias est doloribus, explicabo tempora! Repudiandae assumenda officia culpa eveniet
-                    optio exercitationem distinctio molestias?
-                </p>
-                <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum non ducimus nam perspiciatis possimus
-                    reiciendis ullam alias est doloribus, explicabo tempora! Repudiandae assumenda officia culpa eveniet
-                    optio exercitationem distinctio molestias?
-                </p>
-                <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum non ducimus nam perspiciatis possimus
-                    reiciendis ullam alias est doloribus, explicabo tempora! Repudiandae assumenda officia culpa eveniet
-                    optio exercitationem distinctio molestias?
-                </p>
-                <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum non ducimus nam perspiciatis possimus
-                    reiciendis ullam alias est doloribus, explicabo tempora! Repudiandae assumenda officia culpa eveniet
-                    optio exercitationem distinctio molestias?
-                </p>
-                <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum non ducimus nam perspiciatis possimus
-                    reiciendis ullam alias est doloribus, explicabo tempora! Repudiandae assumenda officia culpa eveniet
-                    optio exercitationem distinctio molestias?
-                </p>
-                <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum non ducimus nam perspiciatis possimus
-                    reiciendis ullam alias est doloribus, explicabo tempora! Repudiandae assumenda officia culpa eveniet
-                    optio exercitationem distinctio molestias?
-                </p>
-                <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum non ducimus nam perspiciatis possimus
-                    reiciendis ullam alias est doloribus, explicabo tempora! Repudiandae assumenda officia culpa eveniet
-                    optio exercitationem distinctio molestias?
-                </p>
-                <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum non ducimus nam perspiciatis possimus
-                    reiciendis ullam alias est doloribus, explicabo tempora! Repudiandae assumenda officia culpa eveniet
-                    optio exercitationem distinctio molestias?
-                </p>
-                <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum non ducimus nam perspiciatis possimus
-                    reiciendis ullam alias est doloribus, explicabo tempora! Repudiandae assumenda officia culpa eveniet
-                    optio exercitationem distinctio molestias?
-                </p>
-                <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum non ducimus nam perspiciatis possimus
-                    reiciendis ullam alias est doloribus, explicabo tempora! Repudiandae assumenda officia culpa eveniet
-                    optio exercitationem distinctio molestias?
-                </p>
-                <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum non ducimus nam perspiciatis possimus
-                    reiciendis ullam alias est doloribus, explicabo tempora! Repudiandae assumenda officia culpa eveniet
-                    optio exercitationem distinctio molestias?
-                </p>
-                <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum non ducimus nam perspiciatis possimus
-                    reiciendis ullam alias est doloribus, explicabo tempora! Repudiandae assumenda officia culpa eveniet
-                    optio exercitationem distinctio molestias?
-                </p>
-                <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum non ducimus nam perspiciatis possimus
-                    reiciendis ullam alias est doloribus, explicabo tempora! Repudiandae assumenda officia culpa eveniet
-                    optio exercitationem distinctio molestias?
-                </p>
-                <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum non ducimus nam perspiciatis possimus
-                    reiciendis ullam alias est doloribus, explicabo tempora! Repudiandae assumenda officia culpa eveniet
-                    optio exercitationem distinctio molestias?
-                </p>
-                <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum non ducimus nam perspiciatis possimus
-                    reiciendis ullam alias est doloribus, explicabo tempora! Repudiandae assumenda officia culpa eveniet
-                    optio exercitationem distinctio molestias?
-                </p>
-                <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum non ducimus nam perspiciatis possimus
-                    reiciendis ullam alias est doloribus, explicabo tempora! Repudiandae assumenda officia culpa eveniet
-                    optio exercitationem distinctio molestias?
-                </p>
-                <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum non ducimus nam perspiciatis possimus
-                    reiciendis ullam alias est doloribus, explicabo tempora! Repudiandae assumenda officia culpa eveniet
-                    optio exercitationem distinctio molestias?
-                </p>
-                <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum non ducimus nam perspiciatis possimus
-                    reiciendis ullam alias est doloribus, explicabo tempora! Repudiandae assumenda officia culpa eveniet
-                    optio exercitationem distinctio molestias?
-                </p>
-                <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum non ducimus nam perspiciatis possimus
-                    reiciendis ullam alias est doloribus, explicabo tempora! Repudiandae assumenda officia culpa eveniet
-                    optio exercitationem distinctio molestias?
-                </p>
-                <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum non ducimus nam perspiciatis possimus
-                    reiciendis ullam alias est doloribus, explicabo tempora! Repudiandae assumenda officia culpa eveniet
-                    optio exercitationem distinctio molestias?
-                </p>
+            <div class="profile-card">
+                <img src="user-profile-pic.jpg" alt="User Profile Picture">
+                <h3>John Doe</h3>
+                <p>Email: john.doe@example.com</p>
+                <p>Phone: +1 123-456-7890</p>
+                <!-- Add more profile details as needed -->
             </div>
+            <form id="password-update-form">
+                <h3>Update Password</h3>
+                <label for="current-password">Current Password:</label>
+                <input type="password" id="current-password" name="current-password" required>
+                <label for="new-password">New Password:</label>
+                <input type="password" id="new-password" name="new-password" required>
+                <label for="confirm-password">Confirm New Password:</label>
+                <input type="password" id="confirm-password" name="confirm-password" required>
+                <button type="submit" class="update-button">Update Password</button>
+            </form>
         </section>
     </div>
 </div>
