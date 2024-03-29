@@ -556,7 +556,7 @@ select:focus {
     align-items: center;
 }
 
-.profileBox {
+.user-profile {
     display: flex;
     align-items: center;
     gap: 5px;
@@ -564,6 +564,8 @@ select:focus {
     font-weight: 700;
     cursor: pointer;
 }
+
+.profileBox 
 
 .profile-pic {
     width: 35px;
@@ -668,12 +670,12 @@ select:focus {
 /* Main Content Styles */
 .main-content section {
     background: #e8e9eb;
-    overflow-y: scroll;
     width: 100%;
     height: 80.5vh;
     display: none;
     padding: 15px 25px;
     border: 1px solid #ddd;
+    overflow-y: scroll;
 }
 
 .main-content section.active-section {

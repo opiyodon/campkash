@@ -1,0 +1,44 @@
+
+
+/* Specific styles for the dashboard summary section */
+#dashboard-summary {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+
+#dashboard-summary .card {
+    background-color: #ffffff;
+    padding: 15px;
+    border-radius: 5px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    margin-right: 20px;
+    margin-bottom: 20px;
+    width: calc(50% - 20px);
+}
+
+#dashboard-summary .card.chart-card {
+    width: 100%; /* Full width for the chart card */
+    height: 400px; /* Fixed height for the chart card */
+}
+
+/* Last card in the row should not have a margin to the right */
+#dashboard-summary .card:last-child {
+    margin-right: 0;
+}
+
+/* Styles for headings and text */
+.main-content h2,
+.main-content h3,
+.main-content p,
+.main-content ul {
+    color: #333;
+    line-height: 1.6;
+}
+
+/* Styles for the chart */
+#dashboard-summary .chart {
+    width: 300px; /* Chart width fills the card */
+    height: 200px; /* Chart height fills the card */
+}

@@ -103,7 +103,7 @@ document.addEventListener('DOMContentLoaded', function () {
     var links = document.querySelectorAll('.sidebar ul a');
     var profileBtn = document.querySelector('.profileBtn'); // Since there's only one profile button
     var sections = document.querySelectorAll('.main-content section');
-    var activeLink; // To keep track of the currently active link
+    var activeLink = document.querySelector('.sidebar ul a.active'); // Keep track of the currently active link
 
     function changeActiveSection(event) {
         event.preventDefault();
@@ -116,6 +116,7 @@ document.addEventListener('DOMContentLoaded', function () {
         // If the profile button is clicked, activate the profile section
         if (this === profileBtn) {
             document.querySelector('#profile').classList.add('active-section');
+            // Do not remove the 'active' class from the sidebar links
         } else {
             // Remove active class from the previously active link
             if (activeLink) {
@@ -137,3 +138,4 @@ document.addEventListener('DOMContentLoaded', function () {
     // Add click event to the profile button
     profileBtn.addEventListener('click', changeActiveSection);
 });
+

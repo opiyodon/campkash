@@ -6,6 +6,7 @@
     </div>
 </footer>
 
+<script src="js/chart.js"></script>
 <script src="js/script.js"></script>
 
 </body>

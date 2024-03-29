@@ -18,7 +18,7 @@
                 <div class="profileBtn">
                     <a href="#profile">Profile</a>
                 </div>
-                <a href="logout.php">Logout</a>
+                <a href="logout.php" class="dropdown-logout">Logout</a>
             </div>
         </div>
     </div>
@@ -62,167 +62,32 @@
     <div class="dashboardContainer main-content">
         <!-- Dashboard Summary Section -->
         <section id="dashboard-summary" class="active-section">
-            <h2>Dashboard Summary</h2>
-            <p>Welcome to your student loan dashboard! Here you can find a summary of your loan status, upcoming
-                repayment
-                dates, and recent transactions. Stay on top of your finances with ease.</p>
-
             <div>
-                <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum non ducimus nam perspiciatis possimus
-                    reiciendis ullam alias est doloribus, explicabo tempora! Repudiandae assumenda officia culpa eveniet
-                    optio exercitationem distinctio molestias?
-                </p>
-                <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum non ducimus nam perspiciatis possimus
-                    reiciendis ullam alias est doloribus, explicabo tempora! Repudiandae assumenda officia culpa eveniet
-                    optio exercitationem distinctio molestias?
-                </p>
-                <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum non ducimus nam perspiciatis possimus
-                    reiciendis ullam alias est doloribus, explicabo tempora! Repudiandae assumenda officia culpa eveniet
-                    optio exercitationem distinctio molestias?
-                </p>
-                <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum non ducimus nam perspiciatis possimus
-                    reiciendis ullam alias est doloribus, explicabo tempora! Repudiandae assumenda officia culpa eveniet
-                    optio exercitationem distinctio molestias?
-                </p>
-                <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum non ducimus nam perspiciatis possimus
-                    reiciendis ullam alias est doloribus, explicabo tempora! Repudiandae assumenda officia culpa eveniet
-                    optio exercitationem distinctio molestias?
-                </p>
-                <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum non ducimus nam perspiciatis possimus
-                    reiciendis ullam alias est doloribus, explicabo tempora! Repudiandae assumenda officia culpa eveniet
-                    optio exercitationem distinctio molestias?
-                </p>
-                <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum non ducimus nam perspiciatis possimus
-                    reiciendis ullam alias est doloribus, explicabo tempora! Repudiandae assumenda officia culpa eveniet
-                    optio exercitationem distinctio molestias?
-                </p>
-                <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum non ducimus nam perspiciatis possimus
-                    reiciendis ullam alias est doloribus, explicabo tempora! Repudiandae assumenda officia culpa eveniet
-                    optio exercitationem distinctio molestias?
-                </p>
-                <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum non ducimus nam perspiciatis possimus
-                    reiciendis ullam alias est doloribus, explicabo tempora! Repudiandae assumenda officia culpa eveniet
-                    optio exercitationem distinctio molestias?
-                </p>
-                <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum non ducimus nam perspiciatis possimus
-                    reiciendis ullam alias est doloribus, explicabo tempora! Repudiandae assumenda officia culpa eveniet
-                    optio exercitationem distinctio molestias?
-                </p>
-                <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum non ducimus nam perspiciatis possimus
-                    reiciendis ullam alias est doloribus, explicabo tempora! Repudiandae assumenda officia culpa eveniet
-                    optio exercitationem distinctio molestias?
-                </p>
-                <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum non ducimus nam perspiciatis possimus
-                    reiciendis ullam alias est doloribus, explicabo tempora! Repudiandae assumenda officia culpa eveniet
-                    optio exercitationem distinctio molestias?
-                </p>
-                <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum non ducimus nam perspiciatis possimus
-                    reiciendis ullam alias est doloribus, explicabo tempora! Repudiandae assumenda officia culpa eveniet
-                    optio exercitationem distinctio molestias?
-                </p>
-                <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum non ducimus nam perspiciatis possimus
-                    reiciendis ullam alias est doloribus, explicabo tempora! Repudiandae assumenda officia culpa eveniet
-                    optio exercitationem distinctio molestias?
-                </p>
-                <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum non ducimus nam perspiciatis possimus
-                    reiciendis ullam alias est doloribus, explicabo tempora! Repudiandae assumenda officia culpa eveniet
-                    optio exercitationem distinctio molestias?
-                </p>
-                <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum non ducimus nam perspiciatis possimus
-                    reiciendis ullam alias est doloribus, explicabo tempora! Repudiandae assumenda officia culpa eveniet
-                    optio exercitationem distinctio molestias?
-                </p>
-                <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum non ducimus nam perspiciatis possimus
-                    reiciendis ullam alias est doloribus, explicabo tempora! Repudiandae assumenda officia culpa eveniet
-                    optio exercitationem distinctio molestias?
-                </p>
-                <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum non ducimus nam perspiciatis possimus
-                    reiciendis ullam alias est doloribus, explicabo tempora! Repudiandae assumenda officia culpa eveniet
-                    optio exercitationem distinctio molestias?
-                </p>
-                <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum non ducimus nam perspiciatis possimus
-                    reiciendis ullam alias est doloribus, explicabo tempora! Repudiandae assumenda officia culpa eveniet
-                    optio exercitationem distinctio molestias?
-                </p>
-                <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum non ducimus nam perspiciatis possimus
-                    reiciendis ullam alias est doloribus, explicabo tempora! Repudiandae assumenda officia culpa eveniet
-                    optio exercitationem distinctio molestias?
-                </p>
-                <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum non ducimus nam perspiciatis possimus
-                    reiciendis ullam alias est doloribus, explicabo tempora! Repudiandae assumenda officia culpa eveniet
-                    optio exercitationem distinctio molestias?
-                </p>
-                <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum non ducimus nam perspiciatis possimus
-                    reiciendis ullam alias est doloribus, explicabo tempora! Repudiandae assumenda officia culpa eveniet
-                    optio exercitationem distinctio molestias?
-                </p>
-                <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum non ducimus nam perspiciatis possimus
-                    reiciendis ullam alias est doloribus, explicabo tempora! Repudiandae assumenda officia culpa eveniet
-                    optio exercitationem distinctio molestias?
-                </p>
-                <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum non ducimus nam perspiciatis possimus
-                    reiciendis ullam alias est doloribus, explicabo tempora! Repudiandae assumenda officia culpa eveniet
-                    optio exercitationem distinctio molestias?
-                </p>
-                <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum non ducimus nam perspiciatis possimus
-                    reiciendis ullam alias est doloribus, explicabo tempora! Repudiandae assumenda officia culpa eveniet
-                    optio exercitationem distinctio molestias?
-                </p>
-                <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum non ducimus nam perspiciatis possimus
-                    reiciendis ullam alias est doloribus, explicabo tempora! Repudiandae assumenda officia culpa eveniet
-                    optio exercitationem distinctio molestias?
-                </p>
-                <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum non ducimus nam perspiciatis possimus
-                    reiciendis ullam alias est doloribus, explicabo tempora! Repudiandae assumenda officia culpa eveniet
-                    optio exercitationem distinctio molestias?
-                </p>
-                <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum non ducimus nam perspiciatis possimus
-                    reiciendis ullam alias est doloribus, explicabo tempora! Repudiandae assumenda officia culpa eveniet
-                    optio exercitationem distinctio molestias?
-                </p>
-                <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum non ducimus nam perspiciatis possimus
-                    reiciendis ullam alias est doloribus, explicabo tempora! Repudiandae assumenda officia culpa eveniet
-                    optio exercitationem distinctio molestias?
-                </p>
-                <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum non ducimus nam perspiciatis possimus
-                    reiciendis ullam alias est doloribus, explicabo tempora! Repudiandae assumenda officia culpa eveniet
-                    optio exercitationem distinctio molestias?
-                </p>
-                <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum non ducimus nam perspiciatis possimus
-                    reiciendis ullam alias est doloribus, explicabo tempora! Repudiandae assumenda officia culpa eveniet
-                    optio exercitationem distinctio molestias?
-                </p>
+                <div class="card">
+                    <h2>Dashboard Overview</h2>
+                    <p>Welcome to your student loan dashboard! This is your hub for all loan-related information.</p>
+                </div>
+            </div>
+            <div>
+                <div class="card">
+                    <h3>Next Repayment Date</h3>
+                    <p>Your next scheduled repayment is on: <strong>15th April 2024</strong></p>
+                </div>
+                <div class="card">
+                    <h3>Recent Transactions</h3>
+                    <ul>
+                        <li>Payment received: KES 20,000 - 28th March 2024</li>
+                        <li>Interest applied: KES 5,000 - 1st March 2024</li>
+                    </ul>
+                </div>
+            </div>
+            <div>
+                <div class="card">
+                    <h3>Loan Balance</h3>
+                    <p>Your current outstanding loan balance is: <strong>KES 350,000</strong></p>
+                    <!-- Graph/Chart Placeholder -->
+                    <canvas id="balance-chart"></canvas>
+                </div>
             </div>
         </section>
 
