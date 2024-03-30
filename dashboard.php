@@ -155,10 +155,14 @@ $loans = $result->fetch_all(MYSQLI_ASSOC);
                             <?php echo $loan['loan_balance']; ?>
                         </p>
                         <!-- Repayment form -->
-                        <form id="repayment-form">
+                        <form id="repayment-form" action="php/functions/repay_loan.php" method="POST">
                             <label for="payment-amount">Enter Payment Amount:</label>
                             <input class="dashboard-input" type="number" id="payment-amount" name="payment-amount" min="1"
                                 required>
+                            <input type="hidden" id="loan_id" name="loan_id" value="<?php echo $loan['id']; ?>">
+                            <input type="hidden" id="loan_amount" name="loan_amount" value="<?php echo $loan['loan_amount']; ?>">
+                            <input type="hidden" id="due_date" name="due_date" value="<?php echo $loan['due_date']; ?>">
+                            <input type="hidden" id="loan_balance" name="loan_balance" value="<?php echo $loan['loan_balance']; ?>">
                             <button type="submit" class="repay-button">Confirm Payment</button>
                         </form>
                     </div>
