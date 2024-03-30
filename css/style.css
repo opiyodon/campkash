@@ -54,7 +54,7 @@ nav {
 }
 
 .logo p span {
-    color: #1161ee;
+    color: #407ce4;
 }
 
 ul {
@@ -67,7 +67,7 @@ ul li a {
 }
 
 ul li a:hover {
-    color: #1161ee;
+    color: #407ce4;
 }
 
 .btnBox {
@@ -78,10 +78,10 @@ ul li a:hover {
 .loginBtn {
     width: 100%;
     height: 100%;
-    background: #1161ee;
+    background: #407ce4;
     color: white;
     outline: none;
-    border: 1px solid #1161ee;
+    border: 1px solid #407ce4;
     border-radius: 20px;
     padding: 10px 30px;
     cursor: pointer;
@@ -96,7 +96,7 @@ ul li a:hover {
     height: 100%;
     background: transparent;
     outline: none;
-    border: 1px solid #1161ee;
+    border: 1px solid #407ce4;
     color: white;
     border-radius: 20px;
     padding: 10px 30px;
@@ -104,7 +104,7 @@ ul li a:hover {
 }
 
 .registerBtn:hover {
-    background: #1161ee;
+    background: #407ce4;
 }
 
 .container {
@@ -164,7 +164,7 @@ ul li a:hover {
 }
 
 .nav-btn {
-    border: 2px solid #1161ee;
+    border: 2px solid #407ce4;
     padding: 1px 10px;
     border-radius: 50%;
     /* Make the button a perfect circle */
@@ -179,7 +179,7 @@ ul li a:hover {
 .nav-btn:hover,
 .nav-btn.active {
     /* Add active class for the active button */
-    background: #1161ee;
+    background: #407ce4;
 }
 
 /* Box positioning */
@@ -204,9 +204,9 @@ ul li a:hover {
 .btn {
     width: fit-content;
     height: 100%;
-    background: #1161ee;
+    background: #407ce4;
     outline: none;
-    border: 1px solid #1161ee;
+    border: 1px solid #407ce4;
     color: white;
     border-radius: 80px;
     padding: 20px 80px;
@@ -220,10 +220,10 @@ ul li a:hover {
 .btn-sec {
     width: fit-content;
     height: 100%;
-    background: #1161ee;
+    background: #407ce4;
     color: white;
     outline: none;
-    border: 1px solid #1161ee;
+    border: 1px solid #407ce4;
     border-radius: 80px;
     padding: 10px 50px;
     cursor: pointer;
@@ -518,7 +518,7 @@ ul li a:hover {
 }
 
 .auth-link:hover {
-    color: #1161ee;
+    color: #407ce4;
     text-decoration: underline;
 }
 
@@ -527,10 +527,10 @@ ul li a:hover {
 .input[type="file"]::file-selector-button {
     width: fit-content;
     height: 100%;
-    background: #1161ee;
+    background: #407ce4;
     color: white;
     outline: none;
-    border: 1px solid #1161ee;
+    border: 1px solid #407ce4;
     border-radius: 80px;
     padding: 4px 20px;
     cursor: pointer;
@@ -601,11 +601,11 @@ select:focus {
 
 /* Specific hover style for the logout button */
 .dropdown-logout:hover {
-    background: red;
+    background: #ec4e4e;
 }
 
 .profileBtn a:hover {
-    background: #333;
+    background: rgba(0, 0, 0, 0.2);
 }
 
 /* Dashboard Row */
@@ -617,7 +617,7 @@ select:focus {
 .sidebar {
     background: #dde0e6;
     width: 250px;
-    height: 80.5vh;
+    height: 79.4vh;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -668,7 +668,7 @@ select:focus {
 }
 
 .logout:hover {
-    background: rgb(212, 91, 91);
+    background: #ec4e4e;
     color: #fff;
 }
 
@@ -676,7 +676,7 @@ select:focus {
 .main-content section {
     background: #e8e9eb;
     width: 100%;
-    height: 80.5vh;
+    height: 79.4vh;
     display: none;
     padding: 15px 25px;
     border: 1px solid #ddd;
@@ -688,43 +688,76 @@ select:focus {
 }
 
 /* Dashboard */
-
-/* My Loans */
-#loan-summary table {
-    width: 100%;
-    border-collapse: collapse;
+.dashboard-list {
+    margin-top: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
 }
 
-#loan-summary th,
-#loan-summary td {
-    padding: 10px;
-    text-align: left;
-    border-bottom: 1px solid #ddd;
+.dashboard-item {
+    background-color: #dde0e6;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    margin-right: 20px;
+    margin-bottom: 20px;
+    width: calc(50% - 20px);
+    height: fit-content;
 }
 
-#loan-summary th {
-    font-weight: bold;
-}
-
-#loan-summary tr:nth-child(even) {
-    background-color: #f9f9f9;
+.dashboard-item:hover {
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.8);
 }
 
 /* Repay Loan */
 .loan-list {
+    margin-top: 20px;
     display: flex;
     flex-wrap: wrap;
     justify-content: flex-start;
 }
 
 .loan-item {
-    background-color: #ffffff;
-    padding: 15px;
-    border-radius: 5px;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    background-color: #dde0e6;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
     margin-right: 20px;
     margin-bottom: 20px;
     width: calc(50% - 20px);
+}
+
+.loan-item:hover {
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.8);
+}
+
+.repay-button {
+    width: fit-content;
+    background: #407ce4;
+    outline: none;
+    border: 1px solid #407ce4;
+    color: white;
+    border-radius: 80px;
+    padding: 5px 30px;
+    margin-top: 10px;
+    cursor: pointer;
+}
+
+.repay-button:hover {
+    background: transparent;
+    color: #333
+}
+
+.btn-disabled {
+    background: #09b498;
+    border: 1px solid #09b498;
+    cursor: default;
+}
+
+.btn-disabled:hover {
+    background: #09b498;
+    color: white;
 }
 
 /* Repayment form styles */
@@ -733,30 +766,50 @@ select:focus {
 }
 
 #repayment-form label,
-#repayment-form input,
+.dashboard-input,
 #repayment-form button {
     display: block;
-    margin-bottom: 10px;
+    margin-bottom: 20px;
 }
 
-#repayment-form input[type="number"] {
+.dashboard-input {
     width: 100%;
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
+    color: black;
+    display: block;
+    border: none;
+    outline: none;
+    padding: 20px;
+    border-radius: 80px;
+    background: #dde0e6;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
 
 #repayment-form button {
-    background-color: #007bff;
-    color: #ffffff;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 5px;
+    width: fit-content;
+    background: #407ce4;
+    outline: none;
+    border: 1px solid #407ce4;
+    color: white;
+    border-radius: 80px;
+    padding: 10px 50px;
+    margin-top: 20px;
     cursor: pointer;
 }
 
 #repayment-form button:hover {
-    background-color: #0056b3;
+    background: transparent;
+    color: #333
+}
+
+.btn-error {
+    background: #ec4e4e;
+    border: 1px solid #ec4e4e;
+    cursor: default;
+}
+
+.btn-error:hover {
+    background: #ec4e4e;
+    color: white;
 }
 
 /* Request Loan */
@@ -765,87 +818,46 @@ select:focus {
 }
 
 #loan-request-form label,
-#loan-request-form input,
 #loan-request-form button {
     display: block;
-    margin-bottom: 10px;
+    margin-bottom: 20px;
 }
 
-#loan-request-form input[type="number"] {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-}
-
-#loan-request-form button {
-    background-color: #007bff;
-    color: #ffffff;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 5px;
+.request-button {
+    width: fit-content;
+    background: #407ce4;
+    outline: none;
+    border: 1px solid #407ce4;
+    color: white;
+    border-radius: 80px;
+    padding: 10px 50px;
+    margin-top: 20px;
     cursor: pointer;
 }
 
-#loan-request-form button:hover {
-    background-color: #0056b3;
+.request-button:hover {
+    background: transparent;
+    color: #333
 }
 
 /* Profile Section*/
-.profile-card {
-    background-color: #ffffff;
-    padding: 15px;
-    border-radius: 5px;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-    text-align: center;
+.profile-img-box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
 }
 
-.profile-card img {
-    max-width: 100px;
+.profile-img {
+    width: 200px;
+    height: 200px;
     border-radius: 50%;
-    margin-bottom: 10px;
+    object-fit: cover;
 }
 
-.profile-card h3 {
-    color: #333;
-    margin-bottom: 5px;
-}
-
-.profile-card p {
-    color: #666;
-    margin-bottom: 5px;
-}
-
-/* Password update form styles */
-#password-update-form {
-    margin-top: 20px;
-}
-
-#password-update-form label,
-#password-update-form input,
-#password-update-form button {
+#password-update-form label {
     display: block;
-    margin-bottom: 10px;
-}
-
-#password-update-form input[type="password"] {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-}
-
-#password-update-form button {
-    background-color: #007bff;
-    color: #ffffff;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-#password-update-form button:hover {
-    background-color: #0056b3;
+    margin-bottom: 20px;
 }
 
 /* Footer */

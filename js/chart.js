@@ -6,7 +6,7 @@ const ctx = document.getElementById('myChart');
       labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
       datasets: [{
         label: '# of Votes',
-        data: [12, 19, 3, 5, 2, 3],
+        data: [12000, 19000, 3000, 5000, 2000, 3000],
         borderWidth: 1
       }]
     },

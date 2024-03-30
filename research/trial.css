@@ -1,60 +1,48 @@
-
-/* Base styles for all sections */
-.main-content section {
-    background-color: #f2f4f8;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    margin-bottom: 20px;
+/* loan table */
+function calculateLoanAmount($loan_amount, $penalty) {
+    if ($penalty == 0) {
+        $loan_amount = min($loan_amount * 2, 50000);
+    } else {
+        $loan_amount = $loan_amount / 2;
+    }
+    return $loan_amount;
 }
 
-/* ====================================================================================================================================================  DASHBOARD ================================================================================================================================================================================== */
-/* Specific styles for the dashboard summary section */
-#dashboard-summary {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: flex-start;
-    align-items: flex-start;
+
+function calculatePenalty($due_date, $loan_balance) {
+    $penalty = 0;
+    if ($due_date < date("Y-m-d") && $loan_balance > 0) {
+        $penalty = 5 + $loan_balance;
+    }
+    return $penalty;
 }
 
-#dashboard-summary .card {
-    background-color: #ffffff;
-    padding: 15px;
-    border-radius: 5px;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-    margin-right: 20px;
-    margin-bottom: 20px;
-    width: calc(50% - 20px);
-}
 
-#dashboard-summary .card.chart-card {
-    width: 100%; /* Full width for the chart card */
-    height: 400px; /* Fixed height for the chart card */
-}
 
-/* Last card in the row should not have a margin to the right */
-#dashboard-summary .card:last-child {
-    margin-right: 0;
-}
+/* Recent Transactions */
+type of transaction (loan/payment)
+loan amount / repayment amount
+date of transaction
+limit = 11 transactions
 
-/* Styles for headings and text */
-.main-content h2,
-.main-content h3,
-.main-content p,
-.main-content ul {
-    color: #333;
-    line-height: 1.6;
-}
+/* Loan Balance */
+loan balance
+transaction (loan/payment)
+amount
+limit = 6
 
-/* Styles for the chart */
-#dashboard-summary .chart {
-    width: 300px; /* Chart width fills the card */
-    height: 200px; /* Chart height fills the card */
-}
-/* ====================================================================================================================================================  my loans ================================================================================================================================================================================== */
+/* Next Repayment Date */
+due date
 
-/* ====================================================================================================================================================  repay oan ================================================================================================================================================================================== */
+/* My loan cards */
+loan type
+loan amount
+loan balance
+loan status
 
-/* ====================================================================================================================================================  get loan ================================================================================================================================================================================== */
-
-/* ====================================================================================================================================================  profile ================================================================================================================================================================================== */
+/* Repay loan cards */
+loan type
+loan amount
+loan balance
+input for payment amount
+repay button

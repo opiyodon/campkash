@@ -62,32 +62,29 @@
     <div class="dashboardContainer main-content">
         <!-- Dashboard Summary Section -->
         <section id="dashboard-summary" class="active-section">
-            <div>
-                <div class="card">
-                    <h2>Dashboard Overview</h2>
-                    <p>Welcome to your student loan dashboard! This is your hub for all loan-related information.</p>
-                </div>
-            </div>
-            <div>
-                <div class="card">
-                    <h3>Next Repayment Date</h3>
-                    <p>Your next scheduled repayment is on: <strong>15th April 2024</strong></p>
-                </div>
-                <div class="card">
+            <h2>Dashboard Overview</h2>
+            <p>Welcome to your student loan dashboard! This is your hub for all loan-related information.</p>
+            <div class="dashboard-list">
+                <div class="dashboard-item">
                     <h3>Recent Transactions</h3>
-                    <ul>
-                        <li>Payment received: KES 20,000 - 28th March 2024</li>
-                        <li>Interest applied: KES 5,000 - 1st March 2024</li>
-                    </ul>
+                    <p style="margin-bottom: 10px;">Your recent transactions on loan and repayments:</p>
+
+                    <p style="margin: 1px 0;"><strong>Payment</strong> Received: <strong>KES 20,000</strong> - 28th
+                        March 2024</p>
+                    <p style="margin: 1px 0;"><strong>Loan</strong> Approved: <strong>KES 5,000</strong> - 1st March
+                        2024</p>
+
                 </div>
-            </div>
-            <div>
-                <div class="card">
+                <div class="dashboard-item">
                     <h3>Loan Balance</h3>
                     <p>Your current outstanding loan balance is: <strong>KES 350,000</strong></p>
                     <div>
                         <canvas id="myChart"></canvas>
                     </div>
+                </div>
+                <div class="dashboard-item">
+                    <h3>Next Repayment Date</h3>
+                    <p>Next scheduled repayment is on: <strong>15/01/2004</strong></p>
                 </div>
             </div>
         </section>
@@ -95,75 +92,78 @@
         <!-- Loan Summary Section -->
         <section id="loan-summary">
             <h2>Loan Summary</h2>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Loan Name</th>
-                        <th>Loan Amount</th>
-                        <th>Total Installments</th>
-                        <th>Installments Paid</th>
-                        <th>Status</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>Student Loan A</td>
-                        <td>$5,000</td>
-                        <td>10</td>
-                        <td>5</td>
-                        <td>In Progress</td>
-                    </tr>
-                    <tr>
-                        <td>Emergency Loan</td>
-                        <td>$2,000</td>
-                        <td>6</td>
-                        <td>6</td>
-                        <td>Cleared</td>
-                    </tr>
-                    <!-- Add more rows for other loans -->
-                </tbody>
-            </table>
+            <p>Ready to make a payment? Enter the amount you wish to pay and confirm your transaction. Thank you for
+                your timely repayments! Thank you for
+                your timely repayments!</p>
+            <div class="loan-list">
+                <div class="loan-item">
+                    <h3 style="margin-bottom: 5px;">Student Loan A</h3>
+                    <p style="margin-bottom: 3px;">Loan Amount: KES 20,000</p>
+                    <p>Loan Balance: KES 20,000</p>
+                    <button class="repay-button btn-disabled">In Progress</button>
+                </div>
+                <div class="loan-item">
+                    <h3 style="margin-bottom: 5px;">Emergency Loan</h3>
+                    <p style="margin-bottom: 3px;">Loan Amount: KES 100,000</p>
+                    <p>Loan Balance: KES 0</p>
+                    <button class="repay-button btn-error">Failed</button>
+                </div>
+            </div>
         </section>
 
         <!-- Repay Loan Section -->
         <section id="repay-loan">
             <h2>Repay Your Loan</h2>
             <p>Ready to make a payment? Enter the amount you wish to pay and confirm your transaction. Thank you for
+                your timely repayments! Thank you for
                 your timely repayments!</p>
             <div class="loan-list">
-                <!-- Loan details for each loan -->
                 <div class="loan-item">
-                    <h3>Student Loan A</h3>
-                    <p>Loan Amount: $5,000</p>
-                    <p>Installments Remaining: 5 out of 10</p>
-                    <button class="repay-button">Repay</button>
+                    <h3 style="margin-bottom: 5px;">Student Loan A</h3>
+                    <p style="margin-bottom: 3px;">Loan Amount: KES 20,000</p>
+                    <p>Loan Balance: KES 20,000</p>
+                    <!-- Repayment form -->
+                    <form id="repayment-form">
+                        <label for="payment-amount">Enter Payment Amount:</label>
+                        <input class="dashboard-input" type="number" id="payment-amount" name="payment-amount" min="1"
+                            required>
+                        <button type="submit" class="repay-button">Confirm Payment</button>
+                    </form>
                 </div>
                 <div class="loan-item">
-                    <h3>Emergency Loan</h3>
-                    <p>Loan Amount: $2,000</p>
-                    <p>Installments Remaining: 0 (Cleared)</p>
-                    <!-- No repayment button for cleared loan -->
+                    <h3 style="margin-bottom: 5px;">Emergency Loan</h3>
+                    <p style="margin-bottom: 3px;">Loan Amount: KES 100,000</p>
+                    <p>Loan Balance: KES 0</p>
+                    <!-- Repayment form -->
+                    <form id="repayment-form">
+                        <label for="payment-amount">Enter Payment Amount:</label>
+                        <input class="dashboard-input" type="number" id="payment-amount" name="payment-amount" min="1"
+                            required>
+                        <button type="submit" class="repay-button">Confirm Payment</button>
+                    </form>
                 </div>
-                <!-- Add more loan items as needed -->
             </div>
-            <!-- Repayment form -->
-            <form id="repayment-form">
-                <label for="payment-amount">Enter Payment Amount:</label>
-                <input type="number" id="payment-amount" name="payment-amount" min="1" required>
-                <button type="submit" class="confirm-button">Confirm Payment</button>
-            </form>
         </section>
 
         <!-- Request Loan Section -->
         <section id="request-loan">
             <h2>Request a New Loan</h2>
             <p>Need additional funds for your studies? Fill out our simple loan request form and get an approval within
-                24 hours.</p>
+                24 hours. Fill out our simple loan request form and get an approval within 24 hours.</p>
             <form id="loan-request-form">
-                <label for="loan-amount">Loan Amount:</label>
-                <input type="number" id="loan-amount" name="loan-amount" min="1" required>
-                <label for="installments">Number of Installments:</label>
-                <input type="number" id="installments" name="installments" min="1" required>
+                <label for="loan_type">Loan Type:</label>
+                <select id="loan_type" name="loan_type" class="dashboard-input" required>
+                    <option>Select Loan Type</option>
+                    <option value="Tuition Loans">Tuition Loans</option>
+                    <option value="Book & Supplies Loans">Book & Supplies Loans</option>
+                    <option value="Living Expense Loans">Living Expense Loans</option>
+                    <option value="Emergency Loans">Emergency Loans</option>
+                </select>
+                <label for="loan_amount">Loan Amount:</label>
+                <select id="loan_amount" name="loan_amount" class="dashboard-input" required>
+                    <option>Select Loan Amount</option>
+                    <option value="5000">KES 5,000</option>
+                </select>
                 <button type="submit" class="request-button">Submit Request</button>
             </form>
         </section>
@@ -171,22 +171,34 @@
         <!-- Profile Section -->
         <section id="profile">
             <h2>Profile</h2>
-            <div class="profile-card">
-                <img src="user-profile-pic.jpg" alt="User Profile Picture">
-                <h3>John Doe</h3>
-                <p>Email: john.doe@example.com</p>
-                <p>Phone: +1 123-456-7890</p>
-                <!-- Add more profile details as needed -->
+            <p>Below is your profile. You can change your password at will. Below is your profile. You can change your password at will. Below is your profile. You can change your password at will.</p>
+            <div class="loan-list">
+                <div class="loan-item profile-img-box">
+                    <img class="profile-img" src="img/5.jpg" alt="User Profile Picture">
+                <button type="submit" class="request-button">Update Profile</button>
+                </div>
+                <div class="loan-item">
+                    <h3 style="margin-bottom: 5px;">User Details</h3>
+                    <p style="margin-bottom: 3px;">Full Name: Don Artkins</p>
+                    <p style="margin-bottom: 3px;">Username: Artkins</p>
+                    <p style="margin-bottom: 3px;">Email: donartkins@hotmail.com</p>
+                    <p style="margin-bottom: 3px;">Phone: 0714230692</p>
+                    <p style="margin-bottom: 3px;">ID Number: 40263994</p>
+                    <p style="margin-bottom: 3px;">Registration: INTE/MG/0925/09/21</p>
+                    <p style="margin-bottom: 3px;">Gender: Male</p>
+                    <p style="margin-bottom: 3px;">D.O.B: 01/02/2024</p>
+                    <p>Religion: Christian</p>
+                </div>
             </div>
-            <form id="password-update-form">
-                <h3>Update Password</h3>
+            <form id="password-update-form" onsubmit="return validatePasswords();">
+                <h3 style="margin-top: 15px; margin-bottom: 15px;">Update Password</h3>
                 <label for="current-password">Current Password:</label>
-                <input type="password" id="current-password" name="current-password" required>
-                <label for="new-password">New Password:</label>
-                <input type="password" id="new-password" name="new-password" required>
-                <label for="confirm-password">Confirm New Password:</label>
-                <input type="password" id="confirm-password" name="confirm-password" required>
-                <button type="submit" class="update-button">Update Password</button>
+                <input class="dashboard-input" type="password" id="current-password" name="current-password" required>
+                <label for="new_password">New Password:</label>
+                <input class="dashboard-input" type="password" id="new_password" name="new_password" required>
+                <label for="confirm_password">Confirm New Password:</label>
+                <input class="dashboard-input" type="password" id="confirm_password" name="confirm_password" required>
+                <button type="submit" class="request-button">Update Password</button>
             </form>
         </section>
     </div>

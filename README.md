@@ -30,6 +30,27 @@ CREATE TABLE users (
 );
 ```
 
+2.Loans table :
+
+```bash
+CREATE TABLE loans (
+    id INT AUTO_INCREMENT,
+    user_id INT,
+    transaction_type VARCHAR(255),
+    loan_type VARCHAR(255),
+    loan_amount DECIMAL(10, 2),
+    loan_status VARCHAR(255),
+    date_of_transaction DATE,
+    duration INT,
+    due_date DATE,
+    payment_amount DECIMAL(10, 2),
+    payment_date DATE,
+    loan_balance DECIMAL(10, 2),
+    penalty DECIMAL(10, 2),
+    PRIMARY KEY (id)
+);
+```
+
 ### FINALLY
 
 Finally once done open a new tab on your browser and copy this link `http://localhost/campkash/` and this should take you straight to the landing page.
