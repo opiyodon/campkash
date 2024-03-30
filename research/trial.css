@@ -1,22 +1,17 @@
 /* loan table */
-function calculateLoanAmount($loan_amount, $penalty) {
-    if ($penalty == 0) {
-        $loan_amount = min($loan_amount * 2, 50000);
-    } else {
-        $loan_amount = $loan_amount / 2;
-    }
-    return $loan_amount;
-}
-
-
-function calculatePenalty($due_date, $loan_balance) {
-    $penalty = 0;
-    if ($due_date < date("Y-m-d") && $loan_balance > 0) {
-        $penalty = 5 + $loan_balance;
-    }
-    return $penalty;
-}
-
+id
+user_id
+transaction_type - (loan/payment) - select
+loan_type - select
+loan_amount - select range
+loan_status - select
+date _of_transaction
+duration
+due_date
+payment_amount
+payment_date
+loan_balance = (loan amount - payment amount)
+penalty
 
 
 /* Recent Transactions */

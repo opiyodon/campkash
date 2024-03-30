@@ -39,6 +39,7 @@ CREATE TABLE loans (
     transaction_type VARCHAR(255),
     loan_type VARCHAR(255),
     loan_amount DECIMAL(10, 2),
+    max_loan_amount DECIMAL(10, 2),
     loan_status VARCHAR(255),
     date_of_transaction DATE,
     duration INT,

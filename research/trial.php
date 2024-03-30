@@ -1,16 +1,4 @@
-<?php
-include ('php/partials/dashboardNav.php');
-
-// Fetch user details
-$user_id = $_SESSION['user_id']; // Assuming you have user_id stored in session
-$result = $conn->query("SELECT * FROM users WHERE id = $user_id");
-$user = $result->fetch_assoc();
-
-// Fetch loans for the user
-$sql = "SELECT * FROM loans WHERE user_id = $user_id";
-$result = $conn->query($sql);
-$loans = $result->fetch_all(MYSQLI_ASSOC);
-?>
+<?php include ('php/partials/dashboardNav.php'); ?>
 
 <!-- Header -->
 <header>
@@ -24,9 +12,7 @@ $loans = $result->fetch_all(MYSQLI_ASSOC);
         <div class="user-profile">
             <div class="profileBox">
                 <img src="img/5.jpg" alt="User Profile" class="profile-pic">
-                <p>
-                    <?php echo $user['username']; ?>
-                </p>
+                <p>Artkins</p>
             </div>
             <div class="dropdown-content || dropdown-close">
                 <div class="profileBtn">
@@ -110,30 +96,19 @@ $loans = $result->fetch_all(MYSQLI_ASSOC);
                 your timely repayments! Thank you for
                 your timely repayments!</p>
             <div class="loan-list">
-                <?php foreach ($loans as $loan): ?>
-                    <div class="loan-item">
-                        <h3 style="margin-bottom: 5px;">
-                            <?php echo $loan['loan_type']; ?>
-                        </h3>
-                        <p style="margin-bottom: 3px;">Loan Amount: KES
-                            <?php echo $loan['loan_amount']; ?>
-                        </p>
-                        <p>Loan Balance: KES
-                            <?php echo $loan['loan_balance']; ?>
-                        </p>
-                        <?php if ($loan['loan_status'] == 'declined'): ?>
-                            <button class="repay-button btn-error">
-                                <?php echo $loan['loan_status']; ?>
-                            </button>
-                        <?php else: ?>
-                            <button class="repay-button btn-disabled">
-                                <?php echo $loan['loan_status']; ?>
-                            </button>
-                        <?php endif; ?>
-                    </div>
-                <?php endforeach; ?>
+                <div class="loan-item">
+                    <h3 style="margin-bottom: 5px;">Student Loan A</h3>
+                    <p style="margin-bottom: 3px;">Loan Amount: KES 20,000</p>
+                    <p>Loan Balance: KES 20,000</p>
+                    <button class="repay-button btn-disabled">In Progress</button>
+                </div>
+                <div class="loan-item">
+                    <h3 style="margin-bottom: 5px;">Emergency Loan</h3>
+                    <p style="margin-bottom: 3px;">Loan Amount: KES 100,000</p>
+                    <p>Loan Balance: KES 0</p>
+                    <button class="repay-button btn-error">Failed</button>
+                </div>
             </div>
-
         </section>
 
         <!-- Repay Loan Section -->
@@ -143,26 +118,30 @@ $loans = $result->fetch_all(MYSQLI_ASSOC);
                 your timely repayments! Thank you for
                 your timely repayments!</p>
             <div class="loan-list">
-                <?php foreach ($loans as $loan): ?>
-                    <div class="loan-item">
-                        <h3 style="margin-bottom: 5px;">
-                            <?php echo $loan['loan_type']; ?>
-                        </h3>
-                        <p style="margin-bottom: 3px;">Loan Amount: KES
-                            <?php echo $loan['loan_amount']; ?>
-                        </p>
-                        <p>Loan Balance: KES
-                            <?php echo $loan['loan_balance']; ?>
-                        </p>
-                        <!-- Repayment form -->
-                        <form id="repayment-form">
-                            <label for="payment-amount">Enter Payment Amount:</label>
-                            <input class="dashboard-input" type="number" id="payment-amount" name="payment-amount" min="1"
-                                required>
-                            <button type="submit" class="repay-button">Confirm Payment</button>
-                        </form>
-                    </div>
-                <?php endforeach; ?>
+                <div class="loan-item">
+                    <h3 style="margin-bottom: 5px;">Student Loan A</h3>
+                    <p style="margin-bottom: 3px;">Loan Amount: KES 20,000</p>
+                    <p>Loan Balance: KES 20,000</p>
+                    <!-- Repayment form -->
+                    <form id="repayment-form">
+                        <label for="payment-amount">Enter Payment Amount:</label>
+                        <input class="dashboard-input" type="number" id="payment-amount" name="payment-amount" min="1"
+                            required>
+                        <button type="submit" class="repay-button">Confirm Payment</button>
+                    </form>
+                </div>
+                <div class="loan-item">
+                    <h3 style="margin-bottom: 5px;">Emergency Loan</h3>
+                    <p style="margin-bottom: 3px;">Loan Amount: KES 100,000</p>
+                    <p>Loan Balance: KES 0</p>
+                    <!-- Repayment form -->
+                    <form id="repayment-form">
+                        <label for="payment-amount">Enter Payment Amount:</label>
+                        <input class="dashboard-input" type="number" id="payment-amount" name="payment-amount" min="1"
+                            required>
+                        <button type="submit" class="repay-button">Confirm Payment</button>
+                    </form>
+                </div>
             </div>
         </section>
 
@@ -185,12 +164,11 @@ $loans = $result->fetch_all(MYSQLI_ASSOC);
                     <option>Select Loan Amount</option>
                     <?php
                     // Assuming $max_loan_amount is fetched from the database
-                    for ($i = 5000; $i <= $loan['max_loan_amount']; $i += 5000) {
+                    for ($i = 5000; $i <= $max_loan_amount; $i += 5000) {
                         echo "<option value='$i'>KES $i</option>";
                     }
                     ?>
                 </select>
-
                 <button type="submit" class="request-button">Submit Request</button>
             </form>
         </section>
@@ -207,16 +185,15 @@ $loans = $result->fetch_all(MYSQLI_ASSOC);
                 </div>
                 <div class="loan-item">
                     <h3 style="margin-bottom: 5px;">User Details</h3>
-                    <p style="margin-bottom: 3px;">Full Name:
-                        <?php echo $user['fullname']; ?>
-                    </p>
-                    <p style="margin-bottom: 3px;">Username:
-                        <?php echo $user['username']; ?>
-                    </p>
-                    <p style="margin-bottom: 3px;">Email:
-                        <?php echo $user['email']; ?>
-                    </p>
-                    <!-- Add more fields as needed -->
+                    <p style="margin-bottom: 3px;">Full Name: Don Artkins</p>
+                    <p style="margin-bottom: 3px;">Username: Artkins</p>
+                    <p style="margin-bottom: 3px;">Email: donartkins@hotmail.com</p>
+                    <p style="margin-bottom: 3px;">Phone: 0714230692</p>
+                    <p style="margin-bottom: 3px;">ID Number: 40263994</p>
+                    <p style="margin-bottom: 3px;">Registration: INTE/MG/0925/09/21</p>
+                    <p style="margin-bottom: 3px;">Gender: Male</p>
+                    <p style="margin-bottom: 3px;">D.O.B: 01/02/2024</p>
+                    <p>Religion: Christian</p>
                 </div>
             </div>
             <form id="password-update-form" onsubmit="return validatePasswords();">
