@@ -1,10 +1,4 @@
 /*================= todo =================*/
-// profile page
-1.update profile pic
-2.update password
-
-
-
 // admin dashboard
 1.update loan status = pending
               	       under review

@@ -1,15 +1,24 @@
 <?php
 include ('php/partials/dashboardNav.php');
 
-// Fetch user details
+// Fetch single users
 $user_id = $_SESSION['user_id']; // Assuming you have user_id stored in session
 $result = $conn->query("SELECT * FROM users WHERE id = $user_id ORDER BY id DESC");
 $user = $result->fetch_assoc();
 
-// Fetch loans for the user
-$sql = "SELECT * FROM loans WHERE user_id = $user_id ORDER BY id DESC";
+// Fetch all users
+$all_users_result = $conn->query("SELECT * FROM users ORDER BY id DESC");
+$all_users = $all_users_result->fetch_all(MYSQLI_ASSOC);
+
+// Fetch all loans for the user
+$sql = "SELECT * FROM loans ORDER BY id DESC";
 $result = $conn->query($sql);
 $loans = $result->fetch_all(MYSQLI_ASSOC);
+
+// Fetch only the latest 12 loans for the user
+$sql = "SELECT * FROM loans ORDER BY id DESC LIMIT 13";
+$result = $conn->query($sql);
+$limit_loans = $result->fetch_all(MYSQLI_ASSOC);
 ?>
 
 <!-- Header -->
@@ -92,63 +101,89 @@ $loans = $result->fetch_all(MYSQLI_ASSOC);
             <h2>Dashboard Overview</h2>
             <p>Welcome to your admin dashboard! Here's an overview:</p>
             <div class="dashboard-list">
-                <div class="dashboard-item">
-                    <h3 style="text-align: center;">Recent Transactions</h3>
-                    <p style="margin-top: 10px; font-size: 30px; text-align: center;">500</p>
-                </div>
-                <div class="dashboard-item">
-                    <h3 style="text-align: center;">Active Loans</h3>
-                    <p style="margin-top: 10px; font-size: 30px; text-align: center;">120</p>
-                </div>
-                <div class="dashboard-item">
-                    <h3 style="text-align: center;">Approved Loans</h3>
-                    <p style="margin-top: 10px; font-size: 30px; text-align: center;">80</p>
-                </div>
-                <div class="dashboard-item">
-                    <h3 style="text-align: center;">Revenue Generated</h3>
-                    <p style="margin-top: 10px; font-size: 30px; text-align: center;">KES 150,000</p>
+                <div class="dashboard-list">
+                    <div class="dashboard-item">
+                        <h3 style="text-align: center;">Recent Transactions</h3>
+                        <p style="margin-top: 10px; font-size: 30px; text-align: center;">
+                            <?php
+                            $sql = "SELECT COUNT(*) AS total_transactions FROM loans";
+                            $result = $conn->query($sql);
+                            $total_transactions = $result->fetch_assoc()['total_transactions'];
+                            echo $total_transactions;
+                            ?>
+                        </p>
+                    </div>
+                    <div class="dashboard-item">
+                        <h3 style="text-align: center;">Active Loans</h3>
+                        <p style="margin-top: 10px; font-size: 30px; text-align: center;">
+                            <?php
+                            $sql = "SELECT COUNT(*) AS active_loans FROM (SELECT * FROM loans WHERE loan_balance != 0 ORDER BY id DESC) AS recent_loans GROUP BY user_id";
+                            $result = $conn->query($sql);
+                            $active_loans = $result->num_rows;
+                            echo $active_loans;
+                            ?>
+                        </p>
+                    </div>
+                    <div class="dashboard-item">
+                        <h3 style="text-align: center;">Approved Loans</h3>
+                        <p style="margin-top: 10px; font-size: 30px; text-align: center;">
+                            <?php
+                            $sql = "SELECT COUNT(*) AS approved_loans FROM loans WHERE transaction_type = 'Loan' AND loan_status IN ('approved', 'in progress', 'cleared')";
+                            $result = $conn->query($sql);
+                            $approved_loans = $result->fetch_assoc()['approved_loans'];
+                            echo $approved_loans;
+                            ?>
+                        </p>
+                    </div>
+                    <div class="dashboard-item">
+                        <h3 style="text-align: center;">Revenue Generated</h3>
+                        <p style="margin-top: 10px; font-size: 30px; text-align: center;">
+                            <?php
+                            $sql = "SELECT SUM(payment_amount) AS total_payments, SUM(loan_amount) AS total_loans FROM loans";
+                            $result = $conn->query($sql);
+                            $row = $result->fetch_assoc();
+                            $revenue_generated = $row['total_payments'] - $row['total_loans'];
+                            echo "KES " . number_format($revenue_generated, 2); // Format as currency
+                            ?>
+                        </p>
+                    </div>
                 </div>
                 <div class="dashboard-item">
                     <h3>Recent Transactions</h3>
-                    <p style="margin-bottom: 10px;">Your recent transactions on loan and repayments:</p>
-                    <?php foreach ($loans as $loan): ?>
-                        <?php if ($loan['transaction_type'] == 'Loan'): ?>
-                            <p style="margin: 1px 0;">
-                                <strong>
-                                    <?php echo $loan['transaction_type']; ?>
-                                </strong> Approved --- <strong>KES
-                                    <?php echo $loan['loan_amount']; ?>
-                                </strong> --- on
-                                <strong>
-                                    <?php echo $loan['date_of_transaction']; ?>
-                                </strong>
-                            </p>
-                        <?php else: ?>
-                            <p style="margin: 1px 0;">
-                                <strong>
-                                    <?php echo $loan['transaction_type']; ?>
-                                </strong> Received --- <strong>KES
-                                    <?php echo $loan['payment_amount']; ?>
-                                </strong> --- on
-                                <strong>
-                                    <?php echo $loan['payment_date']; ?>
-                                </strong>
-                            </p>
-                        <?php endif; ?>
-                    <?php endforeach; ?>
-
-                </div>
-                <div class="dashboard-item">
-                    <h3>Monthly Analytics</h3>
-                    <p>Total monthly revenue as of <strong>2024</strong> :</p>
-                    <div>
-                        <canvas id="myAdminChart"></canvas>
-                    </div>
+                    <?php if (empty($limit_loans)): ?>
+                        <p>You currently don't have any transactions. Apply for a loan to see your transaction history here.
+                        </p>
+                    <?php else: ?>
+                        <p style="margin-bottom: 10px;">Your recent transactions on loans and repayments:</p>
+                        <?php foreach ($limit_loans as $loan): ?>
+                            <?php if ($loan['transaction_type'] == 'Loan'): ?>
+                                <p style="margin: 1px 0;">
+                                    <strong>
+                                        <?php echo $loan['transaction_type']; ?>
+                                    </strong> Approved --- <strong>KES
+                                        <?php echo $loan['loan_amount']; ?>
+                                    </strong> --- on <strong>
+                                        <?php echo $loan['date_of_transaction']; ?>
+                                    </strong>
+                                </p>
+                            <?php else: ?>
+                                <p style="margin: 1px 0;">
+                                    <strong>
+                                        <?php echo $loan['transaction_type']; ?>
+                                    </strong> Received --- <strong>KES
+                                        <?php echo $loan['payment_amount']; ?>
+                                    </strong> --- on <strong>
+                                        <?php echo $loan['payment_date']; ?>
+                                    </strong>
+                                </p>
+                            <?php endif; ?>
+                        <?php endforeach; ?>
+                    <?php endif; ?>
                 </div>
             </div>
         </section>
 
-        <!-- Loan Summary Section -->
+        <!-- Register Admin Section -->
         <section id="register-admin">
             <h2>Register Admin</h2>
             <p>Ready to make a payment? Enter the amount you wish to pay and confirm your transaction. Thank you for
@@ -226,46 +261,44 @@ $loans = $result->fetch_all(MYSQLI_ASSOC);
             </div>
         </section>
 
-        <!-- Repay Loan Section -->
+        <!-- Manage Users Section -->
         <section id="manage-users">
             <h2>Manage Users</h2>
             <p>Ready to make a payment? Enter the amount you wish to pay and confirm your transaction. Thank you for
                 your timely repayments! Thank you for
                 your timely repayments!</p>
-            <div class="loan-list">
-                <div class="dashboard-item">
-                    <h3>Regular Users</h3>
-                    <?php if ($user['admin'] == 'no'): ?>
-                        <form action="php/functions/delete_user.php" method="POST" style="margin: 1px 0;">
-                            <strong>
-                                <?php echo $user['username']; ?>
-                            </strong> --- <strong>
-                                <?php echo $user['phone_no']; ?>
-                            </strong> ---
-                            <input type="hidden" id="user_id" name="user_id" value="<?php echo $loan['user_id']; ?>">
-                            <button type="submit" class="repay-button">
-                                Delete User
-                            </button>
-                    </form>
-                    <?php endif; ?>
-                </div>
-                <div class="dashboard-item">
-                    <h3>Admin Users</h3>
-                    <?php if ($user['admin'] == 'yes'): ?>
-                        <form action="php/functions/delete_user.php" method="POST" style="margin: 1px 0;">
-                            <strong>
-                                <?php echo $user['username']; ?>
-                            </strong> --- <strong>
-                                <?php echo $user['phone_no']; ?>
-                            </strong> ---
-                            <input type="hidden" id="user_id" name="user_id" value="<?php echo $loan['user_id']; ?>">
-                            <button type="submit" class="repay-button">
-                                Delete Admin
-                            </button>
-                    </form>
-                    <?php endif; ?>
-                </div>
-            </div>
+                <div class="loan-list">
+    <div class="dashboard-item">
+        <h3>Regular Users</h3>
+        <?php foreach ($all_users as $user): ?>
+            <?php if ($user['admin'] == 'no'): ?>
+                <form action="php/functions/delete_user.php" method="POST" style="margin: 1px 0;">
+                    <strong>
+                        <?php echo $user['username']; ?>
+                    </strong> --- <strong>
+                        <?php echo $user['phone_no']; ?>
+                    </strong>
+                    <button type="submit" class="repay-button" style="margin-left: 20px;">Delete User</button>
+                </form>
+            <?php endif; ?>
+        <?php endforeach; ?>
+    </div>
+    <div class="dashboard-item">
+        <h3>Admin Users</h3>
+        <?php foreach ($all_users as $user): ?>
+            <?php if ($user['admin'] == 'yes'): ?>
+                <form action="php/functions/delete_user.php" method="POST" style="margin: 1px 0;">
+                    <strong>
+                        <?php echo $user['username']; ?>
+                    </strong> --- <strong>
+                        <?php echo $user['phone_no']; ?>
+                    </strong>
+                    <button type="submit" class="repay-button" style="margin-left: 20px;">Delete Admin</button>
+                </form>
+            <?php endif; ?>
+        <?php endforeach; ?>
+    </div>
+</div>
         </section>
 
         <!-- Request Loan Section -->
