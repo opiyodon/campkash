@@ -19,6 +19,21 @@ $loans = $result->fetch_all(MYSQLI_ASSOC);
 $sql = "SELECT * FROM loans ORDER BY id DESC LIMIT 13";
 $result = $conn->query($sql);
 $limit_loans = $result->fetch_all(MYSQLI_ASSOC);
+
+// Fetch the most recent transaction for each loan type for the user
+$sql = "SELECT loans.* FROM loans 
+        INNER JOIN (
+            SELECT loan_type_id, MAX(id) AS max_id
+            FROM loans 
+            GROUP BY loan_type_id
+        ) AS max_loans ON loans.loan_type_id = max_loans.loan_type_id AND loans.id = max_loans.max_id ORDER BY id DESC";
+$result = $conn->query($sql);
+$loan_type_id_loans = $result->fetch_all(MYSQLI_ASSOC);
+
+// Fetch the most recent loan for the user
+$sql = "SELECT * FROM loans WHERE user_id = $user_id ORDER BY id DESC LIMIT 1";
+$result = $conn->query($sql);
+$recent_loan = $result->fetch_assoc();
 ?>
 
 <!-- Header -->
@@ -185,7 +200,7 @@ $limit_loans = $result->fetch_all(MYSQLI_ASSOC);
 
         <!-- Register Admin Section -->
         <section id="register-admin">
-            <h2>Register Admin</h2>
+            <h2>Register New Admin</h2>
             <p>Ready to make a payment? Enter the amount you wish to pay and confirm your transaction. Thank you for
                 your timely repayments! Thank you for
                 your timely repayments!</p>
@@ -193,7 +208,7 @@ $limit_loans = $result->fetch_all(MYSQLI_ASSOC);
                 style="display: flex; justify-content: center; align-items: center; margin-top: 50px;">
                 <div class="register-form"
                     style="width: 600px; height: fit-content; padding: 40px 60px; border-radius: 30px; background: #333;">
-                    <h2 style="margin-bottom: 20px; color: #aaa; text-align: center;">Register Admin</h2>
+                    <h2 style="margin-bottom: 20px; color: #aaa; text-align: center;">Register New Admin</h2>
                     <form action="php/functions/register_admin.php" method="POST" enctype="multipart/form-data">
                         <div class="form-group">
                             <label for="userProfile" class="label">Profile Picture:</label>
@@ -267,38 +282,38 @@ $limit_loans = $result->fetch_all(MYSQLI_ASSOC);
             <p>Ready to make a payment? Enter the amount you wish to pay and confirm your transaction. Thank you for
                 your timely repayments! Thank you for
                 your timely repayments!</p>
-                <div class="loan-list">
-    <div class="dashboard-item">
-        <h3>Regular Users</h3>
-        <?php foreach ($all_users as $user): ?>
-            <?php if ($user['admin'] == 'no'): ?>
-                <form action="php/functions/delete_user.php" method="POST" style="margin: 1px 0;">
-                    <strong>
-                        <?php echo $user['username']; ?>
-                    </strong> --- <strong>
-                        <?php echo $user['phone_no']; ?>
-                    </strong>
-                    <button type="submit" class="repay-button" style="margin-left: 20px;">Delete User</button>
-                </form>
-            <?php endif; ?>
-        <?php endforeach; ?>
-    </div>
-    <div class="dashboard-item">
-        <h3>Admin Users</h3>
-        <?php foreach ($all_users as $user): ?>
-            <?php if ($user['admin'] == 'yes'): ?>
-                <form action="php/functions/delete_user.php" method="POST" style="margin: 1px 0;">
-                    <strong>
-                        <?php echo $user['username']; ?>
-                    </strong> --- <strong>
-                        <?php echo $user['phone_no']; ?>
-                    </strong>
-                    <button type="submit" class="repay-button" style="margin-left: 20px;">Delete Admin</button>
-                </form>
-            <?php endif; ?>
-        <?php endforeach; ?>
-    </div>
-</div>
+            <div class="loan-list">
+                <div class="dashboard-item">
+                    <h3>Regular Users</h3>
+                    <?php foreach ($all_users as $user): ?>
+                        <?php if ($user['admin'] == 'no'): ?>
+                            <form action="php/functions/delete_user.php" method="POST" style="margin: 1px 0;">
+                                <strong>
+                                    <?php echo $user['username']; ?>
+                                </strong> --- <strong>
+                                    <?php echo $user['phone_no']; ?>
+                                </strong>
+                                <button type="submit" class="repay-button" style="margin-left: 20px;">Delete User</button>
+                            </form>
+                        <?php endif; ?>
+                    <?php endforeach; ?>
+                </div>
+                <div class="dashboard-item">
+                    <h3>Admin Users</h3>
+                    <?php foreach ($all_users as $user): ?>
+                        <?php if ($user['admin'] == 'yes'): ?>
+                            <form action="php/functions/delete_user.php" method="POST" style="margin: 1px 0;">
+                                <strong>
+                                    <?php echo $user['username']; ?>
+                                </strong> --- <strong>
+                                    <?php echo $user['phone_no']; ?>
+                                </strong>
+                                <button type="submit" class="repay-button" style="margin-left: 20px;">Delete Admin</button>
+                            </form>
+                        <?php endif; ?>
+                    <?php endforeach; ?>
+                </div>
+            </div>
         </section>
 
         <!-- Request Loan Section -->
@@ -306,27 +321,84 @@ $limit_loans = $result->fetch_all(MYSQLI_ASSOC);
             <h2>Manage Loans</h2>
             <p>Need additional funds for your studies? Fill out our simple loan request form and get an approval within
                 24 hours. Fill out our simple loan request form and get an approval within 24 hours.</p>
-            <form id="loan-request-form" action="php/functions/request_loan.php" method="POST">
-                <label for="loan_type">Loan Type:</label>
-                <select id="loan_type" name="loan_type" class="dashboard-input" required>
-                    <option>Select Loan Type</option>
-                    <option value="Tuition Loans">Tuition Loans</option>
-                    <option value="Book & Supplies Loans">Book & Supplies Loans</option>
-                    <option value="Living Expense Loans">Living Expense Loans</option>
-                    <option value="Emergency Loans">Emergency Loans</option>
-                </select>
-                <label for="loan_amount">Loan Amount:</label>
-                <select id="loan_amount" name="loan_amount" class="dashboard-input" required>
-                    <option>Select Loan Amount</option>
-                    <?php
-                    // Assuming $max_loan_amount is fetched from the database
-                    for ($i = 5000; $i <= $loan['max_loan_amount']; $i += 5000) {
-                        echo "<option value='$i'>KES $i</option>";
-                    }
-                    ?>
-                </select>
-
-                <button type="submit" class="request-button">Submit Request</button>
+            <form id="update-status-form" action="php/functions/update_status.php" method="POST">
+                <div class="loan-list">
+                    <?php foreach ($loan_type_id_loans as $loan): ?>
+                        <?php
+                        // Fetch the username based on the user_id
+                        $user_id = $loan['user_id'];
+                        $result = $conn->query("SELECT username FROM users WHERE id = $user_id");
+                        $user = $result->fetch_assoc();
+                        ?>
+                        <div class="loan-item">
+                            <h3 style="margin-bottom: 5px;">
+                                <?php echo $user['username']; ?>
+                            </h3>
+                            <p style="margin-bottom: 3px;">Loan Type:
+                                <?php echo $loan['loan_type']; ?>
+                            </p>
+                            <p style="margin-bottom: 3px;">Loan Amount: KES
+                                <?php echo $loan['loan_amount']; ?>
+                            </p>
+                            <p>Loan Balance: KES
+                                <?php echo $loan['loan_balance']; ?>
+                            </p>
+                            <p>Loan Status:
+                                <?php
+                                $status = $loan['loan_status'];
+                                $color = '';
+                                switch ($status) {
+                                    case 'Pending':
+                                        $color = 'orange';
+                                        break;
+                                    case 'Under Review':
+                                        $color = 'blue';
+                                        break;
+                                    case 'Approved':
+                                        $color = 'green';
+                                        break;
+                                    case 'Declined':
+                                        $color = 'red';
+                                        break;
+                                    case 'In Progress':
+                                        $color = 'purple';
+                                        break;
+                                    case 'Cleared':
+                                        $color = 'black';
+                                        break;
+                                }
+                                echo "<span style='color:{$color};'>{$status}</span>";
+                                ?>
+                            </p>
+                            <label for="loan_status">Loan Status:</label>
+                            <select id="loan_status" name="loan_status" class="dashboard-input" required>
+                                <option>Select Loan Status</option>
+                                <option value="Pending">Pending</option>
+                                <option value="Under Review">Under Review</option>
+                                <option value="Approved">Approved</option>
+                                <option value="Declined">Declined</option>
+                                <option value="In Progress">In Progress</option>
+                                <option value="Cleared">Cleared</option>
+                            </select>
+                            <input type="hidden" id="loan_id" name="loan_id" value="<?php echo $recent_loan['id']; ?>">
+                            <input type="hidden" id="loan_amount" name="loan_amount"
+                                value="<?php echo $recent_loan['loan_amount']; ?>">
+                            <input type="hidden" id="payment_amount" name="payment_amount"
+                                value="<?php echo $recent_loan['payment_amount']; ?>">
+                            <input type="hidden" id="due_date" name="due_date"
+                                value="<?php echo $recent_loan['due_date']; ?>">
+                            <input type="hidden" id="loan_balance" name="loan_balance"
+                                value="<?php echo $recent_loan['loan_balance']; ?>">
+                            <input type="hidden" id="loan_type" name="loan_type"
+                                value="<?php echo $recent_loan['loan_type']; ?>">
+                            <input type="hidden" id="loan_type_id" name="loan_type_id"
+                                value="<?php echo $recent_loan['loan_type_id']; ?>">
+                            <button class="repay-button">
+                                Update Status
+                            </button>
+                        </div>
+                    <?php endforeach; ?>
+                </div>
             </form>
         </section>
 

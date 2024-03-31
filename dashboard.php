@@ -242,7 +242,6 @@ $loan_type_id_loans = $result->fetch_all(MYSQLI_ASSOC);
                     <?php endforeach; ?>
                 <?php endif; ?>
             </div>
-
         </section>
 
         <!-- Repay Loan Section -->
