@@ -277,10 +277,12 @@ $loan_type_id_loans = $result->fetch_all(MYSQLI_ASSOC);
                                     <input type="hidden" id="loan_id" name="loan_id" value="<?php echo $recent_loan['id']; ?>">
                                     <input type="hidden" id="loan_amount" name="loan_amount"
                                         value="<?php echo $recent_loan['loan_amount']; ?>">
-                                    <input type="hidden" id="due_date" name="due_date" value="<?php echo $recent_loan['due_date']; ?>">
+                                    <input type="hidden" id="due_date" name="due_date"
+                                        value="<?php echo $recent_loan['due_date']; ?>">
                                     <input type="hidden" id="loan_balance" name="loan_balance"
                                         value="<?php echo $recent_loan['loan_balance']; ?>">
-                                    <input type="hidden" id="loan_type" name="loan_type" value="<?php echo $recent_loan['loan_type']; ?>">
+                                    <input type="hidden" id="loan_type" name="loan_type"
+                                        value="<?php echo $recent_loan['loan_type']; ?>">
                                     <input type="hidden" id="loan_type_id" name="loan_type_id"
                                         value="<?php echo $recent_loan['loan_type_id']; ?>">
                                     <button type="submit" class="repay-button">Confirm Payment</button>
@@ -317,7 +319,8 @@ $loan_type_id_loans = $result->fetch_all(MYSQLI_ASSOC);
                     }
                     ?>
                 </select>
-                <input type="hidden" id="last_loan_balance" name="last_loan_balance" value="<?php echo $recent_loan['loan_balance']; ?>">
+                <input type="hidden" id="last_loan_balance" name="last_loan_balance"
+                    value="<?php echo $recent_loan['loan_balance']; ?>">
                 <button type="submit" class="request-button">Submit Request</button>
             </form>
         </section>
@@ -388,10 +391,11 @@ $loan_type_id_loans = $result->fetch_all(MYSQLI_ASSOC);
                     </p>
                 </div>
             </div>
-            <form id="password-update-form" onsubmit="return validatePasswords();">
+            <form action="php/functions/update_password.php" method="POST" id="password-update-form"
+                onsubmit="return validatePasswords();">
                 <h3 style="margin-top: 15px; margin-bottom: 15px;">Update Password</h3>
-                <label for="current-password">Current Password:</label>
-                <input class="dashboard-input" type="password" id="current-password" name="current-password" required>
+                <label for="current_password">Current Password:</label>
+                <input class="dashboard-input" type="password" id="current_password" name="current_password" required>
                 <label for="new_password">New Password:</label>
                 <input class="dashboard-input" type="password" id="new_password" name="new_password" required>
                 <label for="confirm_password">Confirm New Password:</label>

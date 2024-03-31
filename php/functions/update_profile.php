@@ -1,55 +1,60 @@
 <?php
-// Process the Value from Form and Save in Database
-// Check whether the updateProfile button is clicked or not
-if (isset($_POST['updateProfile'])) {
-    // Button Clicked
+include_once '../config.php'; // Include the database connection file
 
-    // 1. Upload the image if selected
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Collect form data and sanitize it
+    $user_id = $_SESSION['user_id'];
+    $image_name = "default.jpg"; // Default image value
 
-    // Check whether upload button is clicked or not
-    if (isset($_FILES['userProfile']['name']) && !empty($_FILES['userProfile']['name'])) {
-        // Get the details of the selected image
-        $image_name = $_FILES['userProfile']['name'];
+    // Get the current profile image
+    $sql = "SELECT userProfile FROM users WHERE id = ?";
+    if ($stmt = $conn->prepare($sql)) {
+        $stmt->bind_param("i", $user_id);
+        if ($stmt->execute()) {
+            $result = $stmt->get_result();
+            $user = $result->fetch_assoc();
+            $current_image = $user['userProfile'];
+        }
+        $stmt->close();
+    }
 
-        // A. Rename the image
-        // Get the extension of selected image
-        $ext = end(explode('.', $image_name));
+    // Handle image upload if selected
+    if (!empty($_FILES['userProfile']['name'])) {
+        $image_name = "User-Profile-" . rand(0000, 9999) . "." . pathinfo($_FILES['userProfile']['name'], PATHINFO_EXTENSION);
+        $upload = move_uploaded_file($_FILES['userProfile']['tmp_name'], "../../img/userProfile/" . $image_name);
 
-        // Create new name for image
-        $image_name = "User-Profile-" . rand(0000, 9999) . "." . $ext; // New image name may be "User-Profile-8462.jpg"
-
-        // B. Upload the image
-        $src = $_FILES['userProfile']['tmp_name'];
-        $dst = "img/userProfile/" . $image_name;
-        $upload = move_uploaded_file($src, $dst);
-
-        // Check whether image uploaded or not
         if (!$upload) {
-            //redirect to Home Page
-            header('location:' . SITEURL_USER . 'index.php');
-            ob_end_flush();
-        } else {
+            $_SESSION['upload'] = "<div class='ERROR'>Failed to Upload Image</div>";
+            header('location:' . SITEURL . 'register.php');
+            exit; // Stop the process if image upload fails
+        }
+    }
+
+    // Update the user's profile image in the database
+    $sql = "UPDATE users SET userProfile = ? WHERE id = ?";
+    if ($stmt = $conn->prepare($sql)) {
+        $stmt->bind_param("si", $image_name, $user_id);
+        if ($stmt->execute()) {
             // Remove the previous image if it exists and is not the default
-            if ($userProfile != "" && $userProfile != "No-Profile.png") {
-                $remove_path = "img/userProfile/" . $userProfile;
+            if ($current_image != "" && $current_image != "default.jpg") {
+                $remove_path = "../../img/userProfile/" . $current_image;
                 if (file_exists($remove_path)) {
                     unlink($remove_path);
                 }
             }
-
-            // Update the user's profile image in the database
-            $sql = "UPDATE user SET userProfile = '$image_name' WHERE id = $user_id";
-            $res = mysqli_query($conn, $sql);
-
-            if ($res) {
-                //redirect to Home Page
-                header('location:' . SITEURL_USER . 'index.php');
-                ob_end_flush();
-            } else {
-                //redirect to Home Page
-                header('location:' . SITEURL_USER . 'index.php');
-                ob_end_flush();
-            }
+            // Redirect to Home Page
+            header('location:' . SITEURL . 'dashboard.php');
+            ob_end_flush();
+        } else {
+            // Redirect to Home Page
+            header('location:' . SITEURL . 'dashboard.php');
+            ob_end_flush();
         }
+        $stmt->close();
     }
+} else {
+    $_SESSION['register2'] = "<div class='ERROR'>You must submit the form to register</div>";
+    header('location:' . SITEURL . 'register.php');
 }
+
+mysqli_close($conn); // Close the database connection

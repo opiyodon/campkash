@@ -1,28 +1,37 @@
 <?php
-// Check whether the updatePassword button is clicked or not
-if (isset($_POST['updatePassword'])) {
-    // Get new password and confirm password from the form
-    $newPassword = $_POST['newPassword'];
-    $confirmPassword = $_POST['confirmPassword'];
+include_once '../config.php'; // Include the database connection file
 
-    // Validate if new password matches the confirm password
-    if ($newPassword == $confirmPassword) {
-        // Encrypt the new password using MD5
-        $password = md5($newPassword);
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Collect form data and sanitize it
+    $user_id = $_SESSION['user_id'];
+    $currentPassword = md5($_POST['current_password']); // Encrypt the current password using MD5
+    $newPassword = md5($_POST['new_password']); // Encrypt the new password using MD5
 
-
-        // Update the password in the database
-        $sql = "UPDATE user SET password='$password' WHERE id = $user_id";
-        $res = mysqli_query($conn, $sql);
-
-        // Check if query executed successfully
-        if ($res) {
-            //redirect to Home Page
-            header('location:' . SITEURL_USER . 'index.php');
-            ob_end_flush();
+    // Check if the current password is correct
+    $sql = "SELECT * FROM users WHERE id=? AND password=?";
+    if ($stmt = $conn->prepare($sql)) {
+        $stmt->bind_param("is", $user_id, $currentPassword);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        if ($result->num_rows > 0) {
+            // Update the database with the new password
+            $sql = "UPDATE users SET password=? WHERE id=?";
+            if ($stmt = $conn->prepare($sql)) {
+                $stmt->bind_param("si", $newPassword, $user_id);
+                if ($stmt->execute()) {
+                    // Redirect to homepage
+                    header("Location: " . SITEURL . "dashboard.php");
+                    ob_end_flush();
+                } else {
+                    $_SESSION['message'] = "<div class='ERROR'>Failed to update password</div>";
+                    header('location:' . SITEURL . 'dashboard.php');
+                    ob_end_flush();
+                }
+                $stmt->close();
+            }
         } else {
-            //redirect to Home Page
-            header('location:' . SITEURL_USER . 'index.php');
+            $_SESSION['message'] = "<div class='ERROR'>Current password is incorrect</div>";
+            header('location:' . SITEURL . 'dashboard.php');
             ob_end_flush();
         }
     }
