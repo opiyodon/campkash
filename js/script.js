@@ -139,3 +139,16 @@ document.addEventListener('DOMContentLoaded', function () {
     profileBtn.addEventListener('click', changeActiveSection);
 });
 
+// change profile picture on dashboard
+var changeProfileBox = document.querySelector(".changeProfileBox");
+var profileOverlay = document.querySelector(".profile-overlay");
+
+// Add the 'profile-overlay-active' class on mouseover
+changeProfileBox.addEventListener("mouseover", function () {
+  profileOverlay.classList.add("profile-overlay-active");
+});
+
+// Remove the 'profile-overlay-active' class on mouseout
+changeProfileBox.addEventListener("mouseout", function () {
+  profileOverlay.classList.remove("profile-overlay-active");
+});

@@ -38,6 +38,7 @@ CREATE TABLE loans (
     user_id INT,
     transaction_type VARCHAR(255),
     loan_type VARCHAR(255),
+    loan_type_id INT,
     loan_amount DECIMAL(10, 2),
     max_loan_amount DECIMAL(10, 2),
     loan_status VARCHAR(255),

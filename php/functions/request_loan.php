@@ -31,17 +31,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
     }
 
-    function calculatePenalty($due_date, $loan_balance)
+    function calculatePenalty($due_date, $temporary_loan_balance)
     {
         $penalty = 0;
-        if ($due_date < date("Y-m-d") && $loan_balance > 0) {
-            $penalty = 5 + $loan_balance;
+        if ($due_date < date("Y-m-d") && $temporary_loan_balance > 0) {
+            $penalty = 5 + $temporary_loan_balance;
         }
         return $penalty;
     }
 
     // Set other necessary variables
     $user_id = $_SESSION['user_id']; // Assuming you have user_id stored in session
+    $loan_type_id = '';
     $transaction_type = 'Loan';
     $loan_status = 'Pending';
     $date_of_transaction = date("Y-m-d");
@@ -49,13 +50,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $due_date = date('Y-m-d', strtotime($date_of_transaction . ' + ' . $duration . ' days'));
     $payment_amount = 0;
     $payment_date = null;
-    $penalty = calculatePenalty($due_date, $loan_balance); // Calculate penalty
-    $loan_balance = ($loan_amount - $payment_amount) + $penalty; // Calculate loan balance
+    $temporary_loan_balance = $loan_amount - $payment_amount;
+    $penalty = calculatePenalty($due_date, $temporary_loan_balance); // Calculate penalty
+    $loan_balance = $temporary_loan_balance + $penalty;
     $max_loan_amount = 5000; // maximum loan amount
 
     // Prepare the SQL query using prepared statements
-    $stmt = $conn->prepare("INSERT INTO loans (user_id, transaction_type, loan_type, loan_amount, max_loan_amount, loan_status, date_of_transaction, duration, due_date, payment_amount, payment_date, loan_balance, penalty) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-    $stmt->bind_param("issssssisssss", $user_id, $transaction_type, $loan_type, $loan_amount, $max_loan_amount, $loan_status, $date_of_transaction, $duration, $due_date, $payment_amount, $payment_date, $loan_balance, $penalty);
+    $stmt = $conn->prepare("INSERT INTO loans (user_id, transaction_type, loan_type, loan_type_id, loan_amount, max_loan_amount, loan_status, date_of_transaction, duration, due_date, payment_amount, payment_date, loan_balance, penalty) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+    $stmt->bind_param("isssssssisssss", $user_id, $transaction_type, $loan_type, $loan_type_id, $loan_amount, $max_loan_amount, $loan_status, $date_of_transaction, $duration, $due_date, $payment_amount, $payment_date, $loan_balance, $penalty);
 
     // Execute the query and provide feedback
     if ($stmt->execute()) {

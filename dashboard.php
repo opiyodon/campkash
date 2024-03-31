@@ -3,13 +3,49 @@ include ('php/partials/dashboardNav.php');
 
 // Fetch user details
 $user_id = $_SESSION['user_id']; // Assuming you have user_id stored in session
-$result = $conn->query("SELECT * FROM users WHERE id = $user_id");
+$result = $conn->query("SELECT * FROM users WHERE id = $user_id ORDER BY id DESC");
 $user = $result->fetch_assoc();
 
-// Fetch loans for the user
-$sql = "SELECT * FROM loans WHERE user_id = $user_id";
+// Fetch all loans for the user
+$sql = "SELECT * FROM loans WHERE user_id = $user_id ORDER BY id DESC";
 $result = $conn->query($sql);
 $loans = $result->fetch_all(MYSQLI_ASSOC);
+
+// Prepare data for the chart
+$loanData = array_fill(0, 12, 0);
+$paymentData = array_fill(0, 12, 0);
+$months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
+foreach ($loans as $loan) {
+    $monthIndex = date('n', strtotime($loan['date_of_transaction'])) - 1;
+    if ($loan['transaction_type'] == 'Loan') {
+        $loanData[$monthIndex] += $loan['loan_amount'];
+    } else {
+        $paymentData[$monthIndex] += $loan['payment_amount'];
+    }
+}
+
+// Convert arrays to JSON
+$loanDataJson = json_encode($loanData);
+$paymentDataJson = json_encode($paymentData);
+$monthsJson = json_encode($months);
+
+// Echo the JSON data as JavaScript variables
+echo "<script>
+var loanData = JSON.parse('$loanDataJson');
+var paymentData = JSON.parse('$paymentDataJson');
+var months = JSON.parse('$monthsJson');
+</script>";
+
+// Fetch only the latest 12 loans for the user
+$sql = "SELECT * FROM loans WHERE user_id = $user_id ORDER BY id DESC LIMIT 16";
+$result = $conn->query($sql);
+$limit_loans = $result->fetch_all(MYSQLI_ASSOC);
+
+// Fetch the most recent loan for the user
+$sql = "SELECT * FROM loans WHERE user_id = $user_id ORDER BY id DESC LIMIT 1";
+$result = $conn->query($sql);
+$recent_loan = $result->fetch_assoc();
 ?>
 
 <!-- Header -->
@@ -23,7 +59,20 @@ $loans = $result->fetch_all(MYSQLI_ASSOC);
         </a>
         <div class="user-profile">
             <div class="profileBox">
-                <img src="img/5.jpg" alt="User Profile" class="profile-pic">
+                <?php
+                // Check whether the image is available or not
+                if ($user['userProfile'] != "") {
+                    // Display image
+                    ?>
+
+                    <img src="img/userProfile/<?php echo $user['userProfile']; ?>" alt="User Profile" class="profile-pic">
+
+                    <?php
+                } else {
+                    // Display message
+                    echo "<div class='ERROR'>Image Not Added</div>";
+                }
+                ?>
                 <p>
                     <?php echo $user['username']; ?>
                 </p>
@@ -82,23 +131,51 @@ $loans = $result->fetch_all(MYSQLI_ASSOC);
                 <div class="dashboard-item">
                     <h3>Recent Transactions</h3>
                     <p style="margin-bottom: 10px;">Your recent transactions on loan and repayments:</p>
-
-                    <p style="margin: 1px 0;"><strong>Payment</strong> Received: <strong>KES 20,000</strong> - 28th
-                        March 2024</p>
-                    <p style="margin: 1px 0;"><strong>Loan</strong> Approved: <strong>KES 5,000</strong> - 1st March
-                        2024</p>
+                    <?php foreach ($limit_loans as $loan): ?>
+                        <?php if ($loan['transaction_type'] == 'Loan'): ?>
+                            <p style="margin: 1px 0;">
+                                <strong>
+                                    <?php echo $loan['transaction_type']; ?>
+                                </strong> Approved --- <strong>KES
+                                    <?php echo $loan['loan_amount']; ?>
+                                </strong> --- on
+                                <strong>
+                                    <?php echo $loan['date_of_transaction']; ?>
+                                </strong>
+                            </p>
+                        <?php else: ?>
+                            <p style="margin: 1px 0;">
+                                <strong>
+                                    <?php echo $loan['transaction_type']; ?>
+                                </strong> Received --- <strong>KES
+                                    <?php echo $loan['payment_amount']; ?>
+                                </strong> --- on
+                                <strong>
+                                    <?php echo $loan['payment_date']; ?>
+                                </strong>
+                            </p>
+                        <?php endif; ?>
+                    <?php endforeach; ?>
 
                 </div>
                 <div class="dashboard-item">
                     <h3>Loan Balance</h3>
-                    <p>Your current outstanding loan balance is: <strong>KES 350,000</strong></p>
-                    <div>
+                    <p>Your current outstanding loan balance is:
+                        <strong>KES
+                            <?php echo $recent_loan['loan_balance']; ?>
+                        </strong>
+                    </p>
+                    <div style="margin-top: 20px;">
                         <canvas id="myChart"></canvas>
                     </div>
                 </div>
                 <div class="dashboard-item">
                     <h3>Next Repayment Date</h3>
-                    <p>Next scheduled repayment is on: <strong>15/01/2004</strong></p>
+                    <p>Next scheduled repayment is on:
+                        <strong>
+                            <?php echo $recent_loan['due_date']; ?>
+                        </strong>
+                    </p>
                 </div>
             </div>
         </section>
@@ -160,9 +237,14 @@ $loans = $result->fetch_all(MYSQLI_ASSOC);
                             <input class="dashboard-input" type="number" id="payment-amount" name="payment-amount" min="1"
                                 required>
                             <input type="hidden" id="loan_id" name="loan_id" value="<?php echo $loan['id']; ?>">
-                            <input type="hidden" id="loan_amount" name="loan_amount" value="<?php echo $loan['loan_amount']; ?>">
+                            <input type="hidden" id="loan_amount" name="loan_amount"
+                                value="<?php echo $loan['loan_amount']; ?>">
                             <input type="hidden" id="due_date" name="due_date" value="<?php echo $loan['due_date']; ?>">
-                            <input type="hidden" id="loan_balance" name="loan_balance" value="<?php echo $loan['loan_balance']; ?>">
+                            <input type="hidden" id="loan_balance" name="loan_balance"
+                                value="<?php echo $loan['loan_balance']; ?>">
+                            <input type="hidden" id="loan_type" name="loan_type" value="<?php echo $loan['loan_type']; ?>">
+                            <input type="hidden" id="loan_type_id" name="loan_type_id"
+                                value="<?php echo $loan['loan_type_id']; ?>">
                             <button type="submit" class="repay-button">Confirm Payment</button>
                         </form>
                     </div>
@@ -205,10 +287,35 @@ $loans = $result->fetch_all(MYSQLI_ASSOC);
             <p>Below is your profile. You can change your password at will. Below is your profile. You can change your
                 password at will. Below is your profile. You can change your password at will.</p>
             <div class="loan-list">
-                <div class="loan-item profile-img-box">
-                    <img class="profile-img" src="img/5.jpg" alt="User Profile Picture">
+                <form action="php/functions/update_profile.php" method="POST" enctype="multipart/form-data"
+                    class="loan-item profile-img-box">
+                    <?php
+                    // Check whether the image is available or not
+                    if ($user['userProfile'] != "") {
+                        // Display image
+                        ?>
+
+                        <div class="changeProfileBox">
+                            <img src="img/userProfile/<?php echo $user['userProfile']; ?>" class="profile-img"
+                                alt="User Profile Picture">
+                            <div>
+                                <label for="userProfile">
+                                    <div class="profile-overlay">
+                                        <i class="fa-solid fa-camera profileImageIcon"></i>
+                                    </div>
+                                </label>
+                                <input type="file" id="userProfile" name="userProfile" hidden accept=".jpeg, .png, .jpg">
+                            </div>
+                        </div>
+
+                        <?php
+                    } else {
+                        // Display message
+                        echo "<div class='ERROR'>Image Not Added</div>";
+                    }
+                    ?>
                     <button type="submit" class="request-button">Update Profile</button>
-                </div>
+                </form>
                 <div class="loan-item">
                     <h3 style="margin-bottom: 5px;">User Details</h3>
                     <p style="margin-bottom: 3px;">Full Name:
@@ -220,7 +327,24 @@ $loans = $result->fetch_all(MYSQLI_ASSOC);
                     <p style="margin-bottom: 3px;">Email:
                         <?php echo $user['email']; ?>
                     </p>
-                    <!-- Add more fields as needed -->
+                    <p style="margin-bottom: 3px;">Phone:
+                        <?php echo $user['phone_no']; ?>
+                    </p>
+                    <p style="margin-bottom: 3px;">ID Number:
+                        <?php echo $user['id_no']; ?>
+                    </p>
+                    <p style="margin-bottom: 3px;">Registration:
+                        <?php echo $user['reg_no']; ?>
+                    </p>
+                    <p style="margin-bottom: 3px;">Gender:
+                        <?php echo $user['gender']; ?>
+                    </p>
+                    <p style="margin-bottom: 3px;">D.O.B:
+                        <?php echo $user['dateofbirth']; ?>
+                    </p>
+                    <p>Religion:
+                        <?php echo $user['religion']; ?>
+                    </p>
                 </div>
             </div>
             <form id="password-update-form" onsubmit="return validatePasswords();">
