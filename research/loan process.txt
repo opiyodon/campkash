@@ -1,14 +1,4 @@
 /*================= todo =================*/
-// dashboard
-2.loan balance = update graph to show data from database which should be the TOTAL LOAN AMOUNT and TOTAL REPAYMENT AMOUNT
-
-// my loans and repay loans
-1.repayment amount = minimum amount should be 		     zero no negative values
-2.card = if theres no payment transaction, 	 show loan transaction, else show the 	 latest payment transaction with 	 	 updated details so that when i repay 	 loan am repaying for the latest 	 	 payment transaction and the new card 	 is shown.
-
-// request loans
-1.loan amount = default first amount value 		should be 5,000 on the select 		options, such that if theres 		no maximum loan amount in 		database then the option 		should be 5000 else follow 		the if statement given
-
 // profile page
 1.update profile pic
 2.update password

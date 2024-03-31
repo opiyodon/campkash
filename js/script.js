@@ -139,16 +139,44 @@ document.addEventListener('DOMContentLoaded', function () {
     profileBtn.addEventListener('click', changeActiveSection);
 });
 
+// restrict maximum amount on repaying loan forms
+window.onload = function () {
+    var paymentInput = document.getElementById('payment-amount');
+    var repaymentForm = document.getElementById('repayment-form');
+    paymentInput.max = loanBalance;
+
+    // Add an event listener to the form
+    repaymentForm.addEventListener('submit', function (event) {
+        if (paymentInput.value > loanBalance) {
+            // Prevent the form from being submitted
+            event.preventDefault();
+
+            // Display an alert and reset the input value
+            alert('Please enter a value equal to or lower than the loan balance.');
+            paymentInput.value = '';
+        }
+    });
+};
+
+// restrict loan application based on loan balance
+document.getElementById('loan-request-form').addEventListener('submit', function (e) {
+    var lastLoanBalance = Number(document.getElementById('last_loan_balance').value);
+    if (lastLoanBalance > 0) {
+        e.preventDefault();
+        alert('You need to clear your previous loan before requesting a new one');
+    }
+});
+
 // change profile picture on dashboard
 var changeProfileBox = document.querySelector(".changeProfileBox");
 var profileOverlay = document.querySelector(".profile-overlay");
 
 // Add the 'profile-overlay-active' class on mouseover
 changeProfileBox.addEventListener("mouseover", function () {
-  profileOverlay.classList.add("profile-overlay-active");
+    profileOverlay.classList.add("profile-overlay-active");
 });
 
 // Remove the 'profile-overlay-active' class on mouseout
 changeProfileBox.addEventListener("mouseout", function () {
-  profileOverlay.classList.remove("profile-overlay-active");
+    profileOverlay.classList.remove("profile-overlay-active");
 });

@@ -38,7 +38,7 @@ var months = JSON.parse('$monthsJson');
 </script>";
 
 // Fetch only the latest 12 loans for the user
-$sql = "SELECT * FROM loans WHERE user_id = $user_id ORDER BY id DESC LIMIT 16";
+$sql = "SELECT * FROM loans WHERE user_id = $user_id ORDER BY id DESC LIMIT 13";
 $result = $conn->query($sql);
 $limit_loans = $result->fetch_all(MYSQLI_ASSOC);
 
@@ -46,6 +46,27 @@ $limit_loans = $result->fetch_all(MYSQLI_ASSOC);
 $sql = "SELECT * FROM loans WHERE user_id = $user_id ORDER BY id DESC LIMIT 1";
 $result = $conn->query($sql);
 $recent_loan = $result->fetch_assoc();
+
+// Check if $recent_loan is not null before trying to access its elements
+$recent_loan_balance = isset($recent_loan['loan_balance']) ? $recent_loan['loan_balance'] : 0;
+$recent_due_date = isset($recent_loan['due_date']) ? $recent_loan['due_date'] : 'N/A';
+
+// Check if loan_balance is set and use it, or use 0 if it's not
+$loanBalance = isset($recent_loan['loan_balance']) ? $recent_loan['loan_balance'] : 0;
+
+// Echo the loan balance as a JavaScript variable
+echo "<script>var loanBalance = {$loanBalance};</script>";
+
+// Fetch the most recent transaction for each loan type for the user
+$sql = "SELECT loans.* FROM loans 
+        INNER JOIN (
+            SELECT loan_type_id, MAX(id) AS max_id
+            FROM loans 
+            WHERE user_id = $user_id 
+            GROUP BY loan_type_id
+        ) AS max_loans ON loans.loan_type_id = max_loans.loan_type_id AND loans.id = max_loans.max_id ORDER BY id DESC";
+$result = $conn->query($sql);
+$loan_type_id_loans = $result->fetch_all(MYSQLI_ASSOC);
 ?>
 
 <!-- Header -->
@@ -130,39 +151,42 @@ $recent_loan = $result->fetch_assoc();
             <div class="dashboard-list">
                 <div class="dashboard-item">
                     <h3>Recent Transactions</h3>
-                    <p style="margin-bottom: 10px;">Your recent transactions on loan and repayments:</p>
-                    <?php foreach ($limit_loans as $loan): ?>
-                        <?php if ($loan['transaction_type'] == 'Loan'): ?>
-                            <p style="margin: 1px 0;">
-                                <strong>
-                                    <?php echo $loan['transaction_type']; ?>
-                                </strong> Approved --- <strong>KES
-                                    <?php echo $loan['loan_amount']; ?>
-                                </strong> --- on
-                                <strong>
-                                    <?php echo $loan['date_of_transaction']; ?>
-                                </strong>
-                            </p>
-                        <?php else: ?>
-                            <p style="margin: 1px 0;">
-                                <strong>
-                                    <?php echo $loan['transaction_type']; ?>
-                                </strong> Received --- <strong>KES
-                                    <?php echo $loan['payment_amount']; ?>
-                                </strong> --- on
-                                <strong>
-                                    <?php echo $loan['payment_date']; ?>
-                                </strong>
-                            </p>
-                        <?php endif; ?>
-                    <?php endforeach; ?>
-
+                    <?php if (empty($limit_loans)): ?>
+                        <p>You currently don't have any transactions. Apply for a loan to see your transaction history here.
+                        </p>
+                    <?php else: ?>
+                        <p style="margin-bottom: 10px;">Your recent transactions on loans and repayments:</p>
+                        <?php foreach ($limit_loans as $loan): ?>
+                            <?php if ($loan['transaction_type'] == 'Loan'): ?>
+                                <p style="margin: 1px 0;">
+                                    <strong>
+                                        <?php echo $loan['transaction_type']; ?>
+                                    </strong> Approved --- <strong>KES
+                                        <?php echo $loan['loan_amount']; ?>
+                                    </strong> --- on <strong>
+                                        <?php echo $loan['date_of_transaction']; ?>
+                                    </strong>
+                                </p>
+                            <?php else: ?>
+                                <p style="margin: 1px 0;">
+                                    <strong>
+                                        <?php echo $loan['transaction_type']; ?>
+                                    </strong> Received --- <strong>KES
+                                        <?php echo $loan['payment_amount']; ?>
+                                    </strong> --- on <strong>
+                                        <?php echo $loan['payment_date']; ?>
+                                    </strong>
+                                </p>
+                            <?php endif; ?>
+                        <?php endforeach; ?>
+                    <?php endif; ?>
                 </div>
+
                 <div class="dashboard-item">
                     <h3>Loan Balance</h3>
                     <p>Your current outstanding loan balance is:
                         <strong>KES
-                            <?php echo $recent_loan['loan_balance']; ?>
+                            <?php echo $recent_loan_balance; ?>
                         </strong>
                     </p>
                     <div style="margin-top: 20px;">
@@ -173,7 +197,7 @@ $recent_loan = $result->fetch_assoc();
                     <h3>Next Repayment Date</h3>
                     <p>Next scheduled repayment is on:
                         <strong>
-                            <?php echo $recent_loan['due_date']; ?>
+                            <?php echo $recent_due_date; ?>
                         </strong>
                     </p>
                 </div>
@@ -187,28 +211,36 @@ $recent_loan = $result->fetch_assoc();
                 your timely repayments! Thank you for
                 your timely repayments!</p>
             <div class="loan-list">
-                <?php foreach ($loans as $loan): ?>
+                <?php if (empty($loan_type_id_loans)): ?>
                     <div class="loan-item">
-                        <h3 style="margin-bottom: 5px;">
-                            <?php echo $loan['loan_type']; ?>
-                        </h3>
-                        <p style="margin-bottom: 3px;">Loan Amount: KES
-                            <?php echo $loan['loan_amount']; ?>
+                        <p>
+                            You currently don't have any loans. Apply for a loan to see your loan details here.
                         </p>
-                        <p>Loan Balance: KES
-                            <?php echo $loan['loan_balance']; ?>
-                        </p>
-                        <?php if ($loan['loan_status'] == 'declined'): ?>
-                            <button class="repay-button btn-error">
-                                <?php echo $loan['loan_status']; ?>
-                            </button>
-                        <?php else: ?>
-                            <button class="repay-button btn-disabled">
-                                <?php echo $loan['loan_status']; ?>
-                            </button>
-                        <?php endif; ?>
                     </div>
-                <?php endforeach; ?>
+                <?php else: ?>
+                    <?php foreach ($loan_type_id_loans as $loan): ?>
+                        <div class="loan-item">
+                            <h3 style="margin-bottom: 5px;">
+                                <?php echo $loan['loan_type']; ?>
+                            </h3>
+                            <p style="margin-bottom: 3px;">Loan Amount: KES
+                                <?php echo $loan['loan_amount']; ?>
+                            </p>
+                            <p>Loan Balance: KES
+                                <?php echo $loan['loan_balance']; ?>
+                            </p>
+                            <?php if ($loan['loan_status'] == 'declined'): ?>
+                                <button class="repay-button btn-error">
+                                    <?php echo $loan['loan_status']; ?>
+                                </button>
+                            <?php else: ?>
+                                <button class="repay-button btn-disabled">
+                                    <?php echo $loan['loan_status']; ?>
+                                </button>
+                            <?php endif; ?>
+                        </div>
+                    <?php endforeach; ?>
+                <?php endif; ?>
             </div>
 
         </section>
@@ -220,35 +252,43 @@ $recent_loan = $result->fetch_assoc();
                 your timely repayments! Thank you for
                 your timely repayments!</p>
             <div class="loan-list">
-                <?php foreach ($loans as $loan): ?>
+                <?php if (empty($loan_type_id_loans)): ?>
                     <div class="loan-item">
-                        <h3 style="margin-bottom: 5px;">
-                            <?php echo $loan['loan_type']; ?>
-                        </h3>
-                        <p style="margin-bottom: 3px;">Loan Amount: KES
-                            <?php echo $loan['loan_amount']; ?>
-                        </p>
-                        <p>Loan Balance: KES
-                            <?php echo $loan['loan_balance']; ?>
-                        </p>
-                        <!-- Repayment form -->
-                        <form id="repayment-form" action="php/functions/repay_loan.php" method="POST">
-                            <label for="payment-amount">Enter Payment Amount:</label>
-                            <input class="dashboard-input" type="number" id="payment-amount" name="payment-amount" min="1"
-                                required>
-                            <input type="hidden" id="loan_id" name="loan_id" value="<?php echo $loan['id']; ?>">
-                            <input type="hidden" id="loan_amount" name="loan_amount"
-                                value="<?php echo $loan['loan_amount']; ?>">
-                            <input type="hidden" id="due_date" name="due_date" value="<?php echo $loan['due_date']; ?>">
-                            <input type="hidden" id="loan_balance" name="loan_balance"
-                                value="<?php echo $loan['loan_balance']; ?>">
-                            <input type="hidden" id="loan_type" name="loan_type" value="<?php echo $loan['loan_type']; ?>">
-                            <input type="hidden" id="loan_type_id" name="loan_type_id"
-                                value="<?php echo $loan['loan_type_id']; ?>">
-                            <button type="submit" class="repay-button">Confirm Payment</button>
-                        </form>
+                        <p>You currently don't have any active loans. Apply for a loan to see your loan details here.</p>
                     </div>
-                <?php endforeach; ?>
+                <?php else: ?>
+                    <?php foreach ($loan_type_id_loans as $loan): ?>
+                        <?php if ($loan['loan_balance'] > 0): ?>
+                            <div class="loan-item">
+                                <h3 style="margin-bottom: 5px;">
+                                    <?php echo $loan['loan_type']; ?>
+                                </h3>
+                                <p style="margin-bottom: 3px;">Loan Amount: KES
+                                    <?php echo $loan['loan_amount']; ?>
+                                </p>
+                                <p>Loan Balance: KES
+                                    <?php echo $loan['loan_balance']; ?>
+                                </p>
+                                <!-- Repayment form -->
+                                <form id="repayment-form" action="php/functions/repay_loan.php" method="POST">
+                                    <label for="payment-amount">Enter Payment Amount:</label>
+                                    <input class="dashboard-input" type="number" id="payment-amount" name="payment-amount" min="1"
+                                        required>
+                                    <input type="hidden" id="loan_id" name="loan_id" value="<?php echo $recent_loan['id']; ?>">
+                                    <input type="hidden" id="loan_amount" name="loan_amount"
+                                        value="<?php echo $recent_loan['loan_amount']; ?>">
+                                    <input type="hidden" id="due_date" name="due_date" value="<?php echo $recent_loan['due_date']; ?>">
+                                    <input type="hidden" id="loan_balance" name="loan_balance"
+                                        value="<?php echo $recent_loan['loan_balance']; ?>">
+                                    <input type="hidden" id="loan_type" name="loan_type" value="<?php echo $recent_loan['loan_type']; ?>">
+                                    <input type="hidden" id="loan_type_id" name="loan_type_id"
+                                        value="<?php echo $recent_loan['loan_type_id']; ?>">
+                                    <button type="submit" class="repay-button">Confirm Payment</button>
+                                </form>
+                            </div>
+                        <?php endif; ?>
+                    <?php endforeach; ?>
+                <?php endif; ?>
             </div>
         </section>
 
@@ -270,13 +310,14 @@ $recent_loan = $result->fetch_assoc();
                 <select id="loan_amount" name="loan_amount" class="dashboard-input" required>
                     <option>Select Loan Amount</option>
                     <?php
-                    // Assuming $max_loan_amount is fetched from the database
-                    for ($i = 5000; $i <= $loan['max_loan_amount']; $i += 5000) {
+                    // Check if max_loan_amount is set and use it, or use 5000 if it's not
+                    $max_loan_amount = isset($loan['max_loan_amount']) ? $loan['max_loan_amount'] : 5000;
+                    for ($i = 5000; $i <= $max_loan_amount; $i += 5000) {
                         echo "<option value='$i'>KES $i</option>";
                     }
                     ?>
                 </select>
-
+                <input type="hidden" id="last_loan_balance" name="last_loan_balance" value="<?php echo $recent_loan['loan_balance']; ?>">
                 <button type="submit" class="request-button">Submit Request</button>
             </form>
         </section>

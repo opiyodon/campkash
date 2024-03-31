@@ -40,9 +40,23 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         return $penalty;
     }
 
+    // Function to generate a unique loan_type_id
+    function generateUniqueLoanTypeId($user_id)
+    {
+        // Create a unique identifier using user ID, current timestamp, and a random number
+        $timestamp = time(); // Get current timestamp
+        $random_number = mt_rand(10000, 99999); // Generate a random number
+        $unique_id = "{$user_id}_{$timestamp}_{$random_number}"; // Combine user ID, timestamp, and random number
+
+        // Hash the unique_id using SHA-256
+        $hashed_unique_id = hash('sha256', $unique_id);
+
+        return $hashed_unique_id;
+    }
+
     // Set other necessary variables
     $user_id = $_SESSION['user_id']; // Assuming you have user_id stored in session
-    $loan_type_id = '';
+    $loan_type_id = generateUniqueLoanTypeId($user_id);
     $transaction_type = 'Loan';
     $loan_status = 'Pending';
     $date_of_transaction = date("Y-m-d");

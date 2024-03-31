@@ -59,9 +59,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $max_loan_amount = 5000; // maximum loan amount
 
     // Prepare the SQL query using prepared statements
-    $stmt = $conn->prepare("INSERT INTO loans (user_id, transaction_type , loan_type, loan_status, date_of_transaction, duration, due_date, payment_amount, payment_date, penalty, loan_balance, max_loan_amount , loan_type_id , loan_amount) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-    $stmt->bind_param("issssssssssiss", $user_id, $transaction_type, $loan_type, $loan_status, $date_of_transaction, $duration, $due_date, $payment_amount, $payment_date, $penalty, $loan_balance, $max_loan_amount, $loan_type_id, $loan_amount);
-
+    $stmt = $conn->prepare("INSERT INTO loans (user_id, transaction_type, loan_type, loan_type_id, loan_amount, max_loan_amount, loan_status, date_of_transaction, duration, due_date, payment_amount, payment_date, loan_balance, penalty) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+    $stmt->bind_param("isssssssisssss", $user_id, $transaction_type, $loan_type, $loan_type_id, $loan_amount, $max_loan_amount, $loan_status, $date_of_transaction, $duration, $due_date, $payment_amount, $payment_date, $loan_balance, $penalty);
 
     // Execute the query and provide feedback
     if ($stmt->execute()) {
