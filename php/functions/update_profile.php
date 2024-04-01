@@ -24,7 +24,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $upload = move_uploaded_file($_FILES['userProfile']['tmp_name'], "../../img/userProfile/" . $image_name);
 
         if (!$upload) {
-            $_SESSION['upload'] = "<div class='ERROR'>Failed to Upload Image</div>";
             header('location:' . SITEURL . 'register.php');
             exit; // Stop the process if image upload fails
         }
@@ -53,7 +52,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $stmt->close();
     }
 } else {
-    $_SESSION['register2'] = "<div class='ERROR'>You must submit the form to register</div>";
     header('location:' . SITEURL . 'register.php');
 }
 

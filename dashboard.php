@@ -229,7 +229,7 @@ $loan_type_id_loans = $result->fetch_all(MYSQLI_ASSOC);
                             <p>Loan Balance: KES
                                 <?php echo $loan['loan_balance']; ?>
                             </p>
-                            <?php if ($loan['loan_status'] == 'declined'): ?>
+                            <?php if ($loan['loan_status'] == 'Declined'): ?>
                                 <button class="repay-button btn-error">
                                     <?php echo $loan['loan_status']; ?>
                                 </button>
@@ -284,6 +284,12 @@ $loan_type_id_loans = $result->fetch_all(MYSQLI_ASSOC);
                                         value="<?php echo $recent_loan['loan_type']; ?>">
                                     <input type="hidden" id="loan_type_id" name="loan_type_id"
                                         value="<?php echo $recent_loan['loan_type_id']; ?>">
+                                    <input type="hidden" id="loan_status" name="loan_status"
+                                        value="<?php echo $recent_loan['loan_status']; ?>">
+                                    <input type="hidden" id="interest" name="interest"
+                                        value="<?php echo $recent_loan['interest']; ?>">
+                                    <input type="hidden" id="max_loan_amount" name="max_loan_amount"
+                                        value="<?php echo $recent_loan['max_loan_amount']; ?>">
                                     <button type="submit" class="repay-button">Confirm Payment</button>
                                 </form>
                             </div>
@@ -312,8 +318,8 @@ $loan_type_id_loans = $result->fetch_all(MYSQLI_ASSOC);
                     <option>Select Loan Amount</option>
                     <?php
                     // Check if max_loan_amount is set and use it, or use 5000 if it's not
-                    $max_loan_amount = isset($loan['max_loan_amount']) ? $loan['max_loan_amount'] : 5000;
-                    for ($i = 5000; $i <= $max_loan_amount; $i += 5000) {
+                    $max_loan_amount = isset($loan['max_loan_amount']) ? $loan['max_loan_amount'] : 1000;
+                    for ($i = 0; $i <= $max_loan_amount; $i += 1000) {
                         echo "<option value='$i'>KES $i</option>";
                     }
                     ?>

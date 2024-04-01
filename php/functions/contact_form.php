@@ -35,9 +35,8 @@ try {
     $mail->Body = "Name: " . $userName . "<br>Email: " . $userEmail . "<br>Message: " . $_POST['message'];
 
     $mail->send();
-    $_SESSION['alert'] = ['message' => 'Email sent', 'type' => 'success'];
 } catch (Exception $e) {
-    $_SESSION['alert'] = ['message' => 'Message could not be sent. Mailer Error: ' . $mail->ErrorInfo, 'type' => 'error'];
+    $mail->ErrorInfo;
 } finally {
     header("Location: " . SITEURL . "contact.php");
     exit();

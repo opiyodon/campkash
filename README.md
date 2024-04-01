@@ -49,6 +49,8 @@ CREATE TABLE loans (
     payment_date DATE,
     loan_balance DECIMAL(10, 2),
     penalty DECIMAL(10, 2),
+    interest DECIMAL(10, 2),
+    revenue_generated DECIMAL(10, 2),
     PRIMARY KEY (id)
 );
 ```

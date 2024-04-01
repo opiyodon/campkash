@@ -32,7 +32,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
     }
 });
 
-// contact page popup
+// alerts
 function displayAlert(message, type) {
     // Create a styled alert box
     var alertBox = document.createElement('div');

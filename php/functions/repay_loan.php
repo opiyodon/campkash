@@ -10,6 +10,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $temporary_loan_balance = mysqli_real_escape_string($conn, $_POST["loan_balance"]);
     $loan_type = mysqli_real_escape_string($conn, $_POST["loan_type"]);
     $loan_type_id = mysqli_real_escape_string($conn, $_POST["loan_type_id"]);
+    $interest = mysqli_real_escape_string($conn, $_POST["interest"]);
+    $temporary_max_loan_amount = mysqli_real_escape_string($conn, $_POST["max_loan_amount"]);
 
     function calculateDuration($loan_amount)
     {
@@ -40,15 +42,45 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     {
         $penalty = 0;
         if ($due_date < date("Y-m-d") && $new_temporary_loan_balance > 0) {
-            $penalty = 5 + $new_temporary_loan_balance;
+            $penalty = 10 + $new_temporary_loan_balance;
         }
         return $penalty;
+    }
+
+    function calculateMaximumLoanAmount($due_date, $loan_balance, $temporary_max_loan_amount)
+    {
+        $max_loan_amount = $temporary_max_loan_amount;
+        if ($due_date > date("Y-m-d") && $loan_balance == 0) {
+            $max_loan_amount = 1000 + $max_loan_amount;
+        } elseif ($due_date < date("Y-m-d") && $loan_balance > 0) {
+            $max_loan_amount = $max_loan_amount / 2;
+        }
+        return $max_loan_amount;
+    }
+
+    function calculateLoanStatus($loan_balance)
+    {
+        if ($loan_balance == 0) {
+            $loan_status = 'Cleared';
+        } else {
+            $loan_status = 'In Progress';
+        }
+        return $loan_status;
+    }
+
+    function calculateExtraPayment($temporary_extra_payment)
+    {
+        if ($temporary_extra_payment > -1) {
+            $extra_payment = $temporary_extra_payment;
+        } else {
+            $extra_payment = 0;
+        }
+        return $extra_payment;
     }
 
     // Set other necessary variables
     $user_id = $_SESSION['user_id']; // Assuming you have user_id stored in session
     $transaction_type = 'Payment';
-    $loan_status = 'Pending';
     $date_of_transaction = date("Y-m-d");
     $duration = calculateDuration($loan_amount); // Calculate duration based on loan amount
     $due_date = date('Y-m-d', strtotime($date_of_transaction . ' + ' . $duration . ' days'));
@@ -56,24 +88,25 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $new_temporary_loan_balance = $temporary_loan_balance - $payment_amount;
     $penalty = calculatePenalty($due_date, $new_temporary_loan_balance); // Calculate penalty
     $loan_balance = $new_temporary_loan_balance + $penalty; // Calculate loan balance
-    $max_loan_amount = 5000; // maximum loan amount
+    $max_loan_amount = calculateMaximumLoanAmount($due_date, $loan_balance, $temporary_max_loan_amount);
+    $loan_status = calculateLoanStatus($loan_balance);
+    $temporary_extra_payment = $loan_balance - $loan_amount;
+    $extra_payment = calculateExtraPayment($temporary_extra_payment);
+    $revenue_generated = $extra_payment + $penalty + $interest;
 
     // Prepare the SQL query using prepared statements
-    $stmt = $conn->prepare("INSERT INTO loans (user_id, transaction_type, loan_type, loan_type_id, loan_amount, max_loan_amount, loan_status, date_of_transaction, duration, due_date, payment_amount, payment_date, loan_balance, penalty) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-    $stmt->bind_param("isssssssisssss", $user_id, $transaction_type, $loan_type, $loan_type_id, $loan_amount, $max_loan_amount, $loan_status, $date_of_transaction, $duration, $due_date, $payment_amount, $payment_date, $loan_balance, $penalty);
+    $stmt = $conn->prepare("INSERT INTO loans (user_id, transaction_type, loan_type, loan_type_id, loan_amount, max_loan_amount, loan_status, date_of_transaction, duration, due_date, payment_amount, payment_date, loan_balance, penalty, interest, revenue_generated) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+    $stmt->bind_param("isssssssisssssss", $user_id, $transaction_type, $loan_type, $loan_type_id, $loan_amount, $max_loan_amount, $loan_status, $date_of_transaction, $duration, $due_date, $payment_amount, $payment_date, $loan_balance, $penalty, $interest, $revenue_generated);
 
     // Execute the query and provide feedback
     if ($stmt->execute()) {
-        $_SESSION['loan_repayment'] = "<div class='SUCCESS'>Loan Repayment Successful</div>";
         header('location:' . SITEURL . 'dashboard.php');
     } else {
-        $_SESSION['loan_repayment'] = "<div class='ERROR'>Failed to Repay Loan</div>";
         header('location:' . SITEURL . 'dashboard.php');
     }
 
     $stmt->close(); // Close statement
 } else {
-    $_SESSION['loan_repayment'] = "<div class='ERROR'>You must submit the form to repay a loan</div>";
     header('location:' . SITEURL . 'dashboard.php');
 }
 

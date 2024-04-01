@@ -43,11 +43,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $mail->Body = "Click on this link to reset your password: " . SITEURL . "reset_password.php?reset_token=" . $reset_token;
 
     $mail->send();
-    $_SESSION['message'] = 'Message has been sent';
-    $_SESSION['msg_type'] = 'success';
   } catch (Exception $e) {
-    $_SESSION['message'] = "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
-    $_SESSION['msg_type'] = 'danger';
+    $mail->ErrorInfo;
   }
 
   // Redirect to homepage

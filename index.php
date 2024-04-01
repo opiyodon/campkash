@@ -5,16 +5,16 @@
     <div class="slider">
         <div class="slides">
             <!-- Radio buttons for navigation -->
-            <input type="radio" name="radio-btn" id="radio1" checked>
-            <input type="radio" name="radio-btn" id="radio2">
-            <input type="radio" name="radio-btn" id="radio3">
-            <input type="radio" name="radio-btn" id="radio4">
-            <input type="radio" name="radio-btn" id="radio5">
-            <input type="radio" name="radio-btn" id="radio6">
-            <input type="radio" name="radio-btn" id="radio7">
-            <input type="radio" name="radio-btn" id="radio8">
-            <input type="radio" name="radio-btn" id="radio9">
-            <input type="radio" name="radio-btn" id="radio10">
+            <input hidden type="radio" name="radio-btn" id="radio1" checked>
+            <input hidden type="radio" name="radio-btn" id="radio2">
+            <input hidden type="radio" name="radio-btn" id="radio3">
+            <input hidden type="radio" name="radio-btn" id="radio4">
+            <input hidden type="radio" name="radio-btn" id="radio5">
+            <input hidden type="radio" name="radio-btn" id="radio6">
+            <input hidden type="radio" name="radio-btn" id="radio7">
+            <input hidden type="radio" name="radio-btn" id="radio8">
+            <input hidden type="radio" name="radio-btn" id="radio9">
+            <input hidden type="radio" name="radio-btn" id="radio10">
 
             <!-- Slide images -->
             <div class="slide first">

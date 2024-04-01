@@ -65,26 +65,26 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $payment_amount = 0;
     $payment_date = null;
     $temporary_loan_balance = $loan_amount - $payment_amount;
+    $interest = 2/100 * ($temporary_loan_balance);
+    $final_balance = $temporary_loan_balance - $interest;
     $penalty = calculatePenalty($due_date, $temporary_loan_balance); // Calculate penalty
     $loan_balance = $temporary_loan_balance + $penalty;
-    $max_loan_amount = 5000; // maximum loan amount
+    $max_loan_amount = 1000; // maximum loan amount
+    $revenue_generated = $interest;
 
     // Prepare the SQL query using prepared statements
-    $stmt = $conn->prepare("INSERT INTO loans (user_id, transaction_type, loan_type, loan_type_id, loan_amount, max_loan_amount, loan_status, date_of_transaction, duration, due_date, payment_amount, payment_date, loan_balance, penalty) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-    $stmt->bind_param("isssssssisssss", $user_id, $transaction_type, $loan_type, $loan_type_id, $loan_amount, $max_loan_amount, $loan_status, $date_of_transaction, $duration, $due_date, $payment_amount, $payment_date, $loan_balance, $penalty);
+    $stmt = $conn->prepare("INSERT INTO loans (user_id, transaction_type, loan_type, loan_type_id, loan_amount, max_loan_amount, loan_status, date_of_transaction, duration, due_date, payment_amount, payment_date, loan_balance, penalty, interest, revenue_generated) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+    $stmt->bind_param("isssssssisssssss", $user_id, $transaction_type, $loan_type, $loan_type_id, $loan_amount, $max_loan_amount, $loan_status, $date_of_transaction, $duration, $due_date, $payment_amount, $payment_date, $loan_balance, $penalty, $interest, $revenue_generated);
 
     // Execute the query and provide feedback
     if ($stmt->execute()) {
-        $_SESSION['loan_request'] = "<div class='SUCCESS'>Loan Request Submitted Successfully</div>";
         header('location:' . SITEURL . 'dashboard.php');
     } else {
-        $_SESSION['loan_request'] = "<div class='ERROR'>Failed to Submit Loan Request</div>";
         header('location:' . SITEURL . 'dashboard.php');
     }
 
     $stmt->close(); // Close statement
 } else {
-    $_SESSION['loan_request'] = "<div class='ERROR'>You must submit the form to request a loan</div>";
     header('location:' . SITEURL . 'dashboard.php');
 }
 

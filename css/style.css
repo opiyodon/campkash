@@ -165,9 +165,8 @@ ul li a:hover {
 
 .nav-btn {
     border: 2px solid #407ce4;
-    padding: 1px 10px;
+    padding: 1px 13px;
     border-radius: 50%;
-    /* Make the button a perfect circle */
     cursor: pointer;
     transition: 1s;
 }

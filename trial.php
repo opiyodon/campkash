@@ -1,107 +1,79 @@
-<?php include('php/partials/dashboardNav.php'); ?>
-
-<!-- Header -->
-<header>
-    <div class="dashboardNav">
-        <a href="index.php">
-            <div class="logo">
-                <img src="img/logo.jpg" alt="CampKash Logo">
-                <p>Camp<span>Kash</span></p>
+<div>
+    <div class="loan-list">
+        <?php foreach ($loan_type_id_loans as $loan): ?>
+            <?php
+            // Fetch the username based on the user_id
+            $user_id = $loan['user_id'];
+            $result = $conn->query("SELECT username FROM users WHERE id = $user_id");
+            $user = $result->fetch_assoc();
+            ?>
+            <div class="loan-item">
+                <h3 style="margin-bottom: 5px;">
+                    <?php echo $user['username']; ?>
+                </h3>
+                <p style="margin-bottom: 3px;">Loan Type:
+                    <?php echo $loan['loan_type']; ?>
+                </p>
+                <p style="margin-bottom: 3px;">Loan Amount: KES
+                    <?php echo $loan['loan_amount']; ?>
+                </p>
+                <p>Loan Balance: KES
+                    <?php echo $loan['loan_balance']; ?>
+                </p>
+                <p>Loan Status:
+                    <?php
+                    $status = $loan['loan_status'];
+                    $color = '';
+                    switch ($status) {
+                        case 'Pending':
+                            $color = 'orange';
+                            break;
+                        case 'Under Review':
+                            $color = 'blue';
+                            break;
+                        case 'Approved':
+                            $color = 'green';
+                            break;
+                        case 'Declined':
+                            $color = 'red';
+                            break;
+                        case 'In Progress':
+                            $color = 'purple';
+                            break;
+                        case 'Cleared':
+                            $color = 'black';
+                            break;
+                    }
+                    echo "<span style='color:{$color};'>{$status}</span>";
+                    ?>
+                </p>
+                <form id="update-status-form" action="php/functions/update_status.php" method="POST">
+                    <label for="loan_status">Loan Status:</label>
+                    <select id="loan_status" name="loan_status" class="dashboard-input" required>
+                        <option>Select Loan Status</option>
+                        <option value="Pending">Pending</option>
+                        <option value="Under Review">Under Review</option>
+                        <option value="Approved">Approved</option>
+                        <option value="Declined">Declined</option>
+                        <option value="In Progress">In Progress</option>
+                        <option value="Cleared">Cleared</option>
+                    </select>
+                    <input type="hidden" id="loan_id" name="loan_id" value="<?php echo $recent_loan['id']; ?>">
+                    <input type="hidden" id="loan_amount" name="loan_amount"
+                        value="<?php echo $recent_loan['loan_amount']; ?>">
+                    <input type="hidden" id="payment_amount" name="payment_amount"
+                        value="<?php echo $recent_loan['payment_amount']; ?>">
+                    <input type="hidden" id="due_date" name="due_date" value="<?php echo $recent_loan['due_date']; ?>">
+                    <input type="hidden" id="loan_balance" name="loan_balance"
+                        value="<?php echo $recent_loan['loan_balance']; ?>">
+                    <input type="hidden" id="loan_type" name="loan_type" value="<?php echo $recent_loan['loan_type']; ?>">
+                    <input type="hidden" id="loan_type_id" name="loan_type_id"
+                        value="<?php echo $recent_loan['loan_type_id']; ?>">
+                    <button class="repay-button">
+                        Update Status
+                    </button>
+                </form>
             </div>
-        </a>
-        <div class="user-profile">
-            <img src="img/5.jpg" alt="User Profile" class="profile-pic">
-            <p>Artkins</p>
-            <div class="dropdown-content">
-                <a href="profile.php">Profile</a>
-                <a href="logout.php">Logout</a>
-            </div>
-        </div>
-    </div>
-</header>
-
-<div class="dashboardRow">
-    <!-- Sidebar -->
-    <aside class="sidebar">
-        <ul>
-            <a href="#dashboard-summary" class="active">
-                <li>
-                    <i></i>
-                    <p>Dashboard</p>
-                </li>
-            </a>
-            <a href="#manage-users">
-                <li>
-                    <i></i>
-                    <p>Manage Users</p>
-                </li>
-            </a>
-            <a href="#approve-loans">
-                <li>
-                    <i></i>
-                    <p>Loans</p>
-                </li>
-            </a>
-            <a href="#generate-reports">
-                <li>
-                    <i></i>
-                    <p>Generate Reports</p>
-                </li>
-            </a>
-            <a href="#register-admin">
-                <li>
-                    <i></i>
-                    <p>Register New Admin</p>
-                </li>
-            </a>
-        </ul>
-        <a class="logout" href="logout.php">
-            <p>Logout</p>
-        </a>
-    </aside>
-
-    <!-- Main Content -->
-    <div class="dashboardContainer main-content">
-        <!-- Dashboard Summary Section -->
-        <section id="dashboard-summary" class="active-section">
-            <h2>Dashboard Summary</h2>
-            <p>Welcome to your admin dashboard! Here's an overview:</p>
-            <ul>
-                <li>Total Users: 500</li>
-                <li>Active Loans: 120</li>
-                <li>Approved Loans: 80</li>
-                <li>Revenue Generated: $150,000</li>
-            </ul>
-        </section>
-
-        <!-- Manage Users Section -->
-        <section id="manage-users">
-            <h2>Manage Users</h2>
-            <!-- User management features (e.g., user list, search, edit, delete) -->
-            <!-- Add relevant content here -->
-        </section>
-
-        <!-- Loans Section -->
-        <section id="approve-loans">
-            <h2>Loans</h2>
-            <!-- Loan approval features (e.g., pending loans, approve/decline buttons) -->
-            <!-- Add relevant content here -->
-        </section>
-
-        <!-- Generate Reports Section -->
-        <section id="generate-reports">
-            <h2>Generate Reports</h2>
-            <!-- Report generation options (e.g., date range, loan status, user activity) -->
-            <!-- Add relevant content here -->
-        </section>
-
-        <!-- Register New Admin Section -->
-        <section id="register-admin">
-            <h2>Register New Admin</h2>
-            <!-- Admin registration form -->
-            <!-- Add relevant content here -->
-        </section>
+        <?php endforeach; ?>
     </div>
 </div>
-
-<?php include('php/partials/footer.php'); ?>

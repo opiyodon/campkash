@@ -23,14 +23,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     header("Location: " . SITEURL . "dashboard.php");
                     ob_end_flush();
                 } else {
-                    $_SESSION['message'] = "<div class='ERROR'>Failed to update password</div>";
                     header('location:' . SITEURL . 'dashboard.php');
                     ob_end_flush();
                 }
                 $stmt->close();
             }
         } else {
-            $_SESSION['message'] = "<div class='ERROR'>Current password is incorrect</div>";
             header('location:' . SITEURL . 'dashboard.php');
             ob_end_flush();
         }

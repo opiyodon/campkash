@@ -24,14 +24,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             header("Location: " . SITEURL . "login.php");
             exit(); // Stop further execution
         } else {
-            $_SESSION['message'] = "<div>Invalid reset token</div>";
             header('location:' . SITEURL . 'reset_password.php');
             exit();
         }
     } else {
-        $_SESSION['message'] = "<div>Token not provided</div>";
         header('location:' . SITEURL . 'reset_password.php');
         exit();
     }
 }
-?>
+
