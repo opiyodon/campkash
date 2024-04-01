@@ -749,14 +749,14 @@ select:focus {
 }
 
 .btn-disabled {
-    background: #09b498;
-    border: 1px solid #09b498;
-    cursor: default;
-}
-
-.btn-disabled:hover {
-    background: #09b498;
+    width: fit-content;
+    outline: none;
+    border: none;
     color: white;
+    border-radius: 80px;
+    padding: 5px 30px;
+    margin-top: 10px;
+    cursor: default;
 }
 
 /* Repayment form styles */

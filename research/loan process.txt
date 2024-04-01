@@ -1,15 +1,4 @@
 /*================= todo =================*/
-// admin dashboard
-1.update loan status = pending
-              	       under review
-              	       approved
-              	       declined
-              	       in progress
-              	       cleared
-
-
-2.redirection to admin_dashboard page when u update profile/password
-
 3.calculate maximum loan amount for overall user
 
 

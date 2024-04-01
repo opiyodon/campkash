@@ -247,15 +247,34 @@ $loan_type_id_loans = $result->fetch_all(MYSQLI_ASSOC);
                             <p>Loan Balance: KES
                                 <?php echo $loan['loan_balance']; ?>
                             </p>
-                            <?php if ($loan['loan_status'] == 'Declined'): ?>
-                                <button class="repay-button btn-error">
-                                    <?php echo $loan['loan_status']; ?>
-                                </button>
-                            <?php else: ?>
-                                <button class="repay-button btn-disabled">
-                                    <?php echo $loan['loan_status']; ?>
-                                </button>
-                            <?php endif; ?>
+                            <?php
+                            $status = $loan['loan_status'];
+                            $color = '';
+                            switch ($status) {
+                                case 'Pending':
+                                    $color = '#f9a825'; // a vibrant yellow
+                                    break;
+                                case 'Under Review':
+                                    $color = '#407ce4'; // the blue you provided
+                                    break;
+                                case 'Approved':
+                                    $color = '#09b498'; // the teal you provided
+                                    break;
+                                case 'Declined':
+                                    $color = '#ec4e4e'; // the red you provided
+                                    break;
+                                case 'In Progress':
+                                    $color = '#9c27b0'; // a deep purple
+                                    break;
+                                case 'Cleared':
+                                    $color = '#4caf50'; // a rich green
+                                    break;
+                            }
+                            ?>
+
+                            <button class="btn-disabled" style='background-color:<?= $color; ?>'>
+                                <?php echo $status; ?>
+                            </button>
                         </div>
                     <?php endforeach; ?>
                 <?php endif; ?>

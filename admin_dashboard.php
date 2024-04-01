@@ -261,22 +261,22 @@ $recent_loan = $result->fetch_assoc();
                             $color = '';
                             switch ($status) {
                                 case 'Pending':
-                                    $color = 'orange';
+                                    $color = '#f9a825'; // a vibrant yellow
                                     break;
                                 case 'Under Review':
-                                    $color = 'blue';
+                                    $color = '#407ce4'; // the blue you provided
                                     break;
                                 case 'Approved':
-                                    $color = 'green';
+                                    $color = '#09b498'; // the teal you provided
                                     break;
                                 case 'Declined':
-                                    $color = 'red';
+                                    $color = '#ec4e4e'; // the red you provided
                                     break;
                                 case 'In Progress':
-                                    $color = 'purple';
+                                    $color = '#9c27b0'; // a deep purple
                                     break;
                                 case 'Cleared':
-                                    $color = 'black';
+                                    $color = '#4caf50'; // a rich green
                                     break;
                             }
                             echo "<span style='color:{$color};'>{$status}</span>";
@@ -462,16 +462,23 @@ $recent_loan = $result->fetch_assoc();
             <p>Below is your profile. You can change your password at will. Below is your profile. You can change your
                 password at will. Below is your profile. You can change your password at will.</p>
             <div class="loan-list">
-                <form action="php/functions/update_profile.php" method="POST" enctype="multipart/form-data"
+                <?php
+                // Fetch the username based on the user_id
+                $user_id = $_SESSION['user_id'];
+                $result = $conn->query("SELECT * FROM users WHERE id = $user_id");
+                $profile_user = $result->fetch_assoc();
+                ?>
+
+                <form action="php/functions/update_admin_profile.php" method="POST" enctype="multipart/form-data"
                     class="loan-item profile-img-box">
                     <?php
                     // Check whether the image is available or not
-                    if ($user['userProfile'] != "") {
+                    if ($profile_user['userProfile'] != "") {
                         // Display image
                         ?>
 
                         <div class="changeProfileBox">
-                            <img src="img/userProfile/<?php echo $user['userProfile']; ?>" class="profile-img"
+                            <img src="img/userProfile/<?php echo $profile_user['userProfile']; ?>" class="profile-img"
                                 alt="User Profile Picture">
                             <div>
                                 <label for="userProfile">
@@ -494,35 +501,35 @@ $recent_loan = $result->fetch_assoc();
                 <div class="loan-item">
                     <h3 style="margin-bottom: 5px;">User Details</h3>
                     <p style="margin-bottom: 3px;">Full Name:
-                        <?php echo $user['fullname']; ?>
+                        <?php echo $profile_user['fullname']; ?>
                     </p>
                     <p style="margin-bottom: 3px;">Username:
-                        <?php echo $user['username']; ?>
+                        <?php echo $profile_user['username']; ?>
                     </p>
                     <p style="margin-bottom: 3px;">Email:
-                        <?php echo $user['email']; ?>
+                        <?php echo $profile_user['email']; ?>
                     </p>
                     <p style="margin-bottom: 3px;">Phone:
-                        <?php echo $user['phone_no']; ?>
+                        <?php echo $profile_user['phone_no']; ?>
                     </p>
                     <p style="margin-bottom: 3px;">ID Number:
-                        <?php echo $user['id_no']; ?>
+                        <?php echo $profile_user['id_no']; ?>
                     </p>
                     <p style="margin-bottom: 3px;">Registration:
-                        <?php echo $user['reg_no']; ?>
+                        <?php echo $profile_user['reg_no']; ?>
                     </p>
                     <p style="margin-bottom: 3px;">Gender:
-                        <?php echo $user['gender']; ?>
+                        <?php echo $profile_user['gender']; ?>
                     </p>
                     <p style="margin-bottom: 3px;">D.O.B:
-                        <?php echo $user['dateofbirth']; ?>
+                        <?php echo $profile_user['dateofbirth']; ?>
                     </p>
                     <p>Religion:
-                        <?php echo $user['religion']; ?>
+                        <?php echo $profile_user['religion']; ?>
                     </p>
                 </div>
             </div>
-            <form action="php/functions/update_password.php" method="POST" id="password-update-form"
+            <form action="php/functions/update_admin_password.php" method="POST" id="password-update-form"
                 onsubmit="return validatePasswords();">
                 <h3 style="margin-top: 15px; margin-bottom: 15px;">Update Password</h3>
                 <label for="current_password">Current Password:</label>
