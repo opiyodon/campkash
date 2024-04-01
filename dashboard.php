@@ -354,8 +354,18 @@ $loan_type_id_loans = $result->fetch_all(MYSQLI_ASSOC);
                 <select id="loan_amount" name="loan_amount" class="dashboard-input" required>
                     <option>Select Loan Amount</option>
                     <?php
-                    // Check if max_loan_amount is set and use it, or use 5000 if it's not
-                    $max_loan_amount = isset($loan['max_loan_amount']) ? $loan['max_loan_amount'] : 1000;
+                    function getMaxLoanAmountForUser($user_id)
+                    {
+                        global $conn;
+                        $query = "SELECT MAX(max_loan_amount) as max_loan_amount FROM loans WHERE user_id = '$user_id'";
+                        $result = mysqli_query($conn, $query);
+                        $row = mysqli_fetch_assoc($result);
+                        return $row['max_loan_amount'];
+                    }
+                    // Assuming you have user_id stored in session
+                    $user_id = $_SESSION['user_id'];
+                    // Fetch max_loan_amount for the user across all loan types
+                    $max_loan_amount = getMaxLoanAmountForUser($user_id);
                     for ($i = 0; $i <= $max_loan_amount; $i += 1000) {
                         echo "<option value='$i'>KES $i</option>";
                     }

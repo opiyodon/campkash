@@ -47,9 +47,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         return $penalty;
     }
 
-    function calculateMaximumLoanAmount($due_date, $loan_balance, $temporary_max_loan_amount)
+    function getMaxLoanAmountForUser($user_id)
     {
-        $max_loan_amount = $temporary_max_loan_amount;
+        global $conn;
+        $query = "SELECT MAX(max_loan_amount) as max_loan_amount FROM loans WHERE user_id = '$user_id'";
+        $result = mysqli_query($conn, $query);
+        $row = mysqli_fetch_assoc($result);
+        return $row['max_loan_amount'];
+    }
+
+    function calculateMaximumLoanAmount($due_date, $loan_balance, $user_id)
+    {
+        $max_loan_amount = getMaxLoanAmountForUser($user_id);
         if ($due_date > date("Y-m-d") && $loan_balance == 0) {
             $max_loan_amount = 1000 + $max_loan_amount;
         } elseif ($due_date < date("Y-m-d") && $loan_balance > 0) {
@@ -88,7 +97,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $new_temporary_loan_balance = $temporary_loan_balance - $payment_amount;
     $penalty = calculatePenalty($due_date, $new_temporary_loan_balance); // Calculate penalty
     $loan_balance = $new_temporary_loan_balance + $penalty; // Calculate loan balance
-    $max_loan_amount = calculateMaximumLoanAmount($due_date, $loan_balance, $temporary_max_loan_amount);
+    $max_loan_amount = calculateMaximumLoanAmount($due_date, $loan_balance, $user_id);
     $loan_status = calculateLoanStatus($loan_balance);
     $temporary_extra_payment = $loan_balance - $loan_amount;
     $extra_payment = calculateExtraPayment($temporary_extra_payment);

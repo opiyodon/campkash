@@ -469,8 +469,7 @@ $recent_loan = $result->fetch_assoc();
                 $profile_user = $result->fetch_assoc();
                 ?>
 
-                <form action="php/functions/update_admin_profile.php" method="POST" enctype="multipart/form-data"
-                    class="loan-item profile-img-box">
+                <form class="loan-item profile-img-box">
                     <?php
                     // Check whether the image is available or not
                     if ($profile_user['userProfile'] != "") {
@@ -480,14 +479,6 @@ $recent_loan = $result->fetch_assoc();
                         <div class="changeProfileBox">
                             <img src="img/userProfile/<?php echo $profile_user['userProfile']; ?>" class="profile-img"
                                 alt="User Profile Picture">
-                            <div>
-                                <label for="userProfile">
-                                    <div class="profile-overlay">
-                                        <i class="fa-solid fa-camera profileImageIcon"></i>
-                                    </div>
-                                </label>
-                                <input type="file" id="userProfile" name="userProfile" hidden accept=".jpeg, .png, .jpg">
-                            </div>
                         </div>
 
                         <?php
@@ -496,7 +487,6 @@ $recent_loan = $result->fetch_assoc();
                         echo "<div class='ERROR'>Image Not Added</div>";
                     }
                     ?>
-                    <button type="submit" class="request-button">Update Profile</button>
                 </form>
                 <div class="loan-item">
                     <h3 style="margin-bottom: 5px;">User Details</h3>
