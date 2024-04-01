@@ -121,7 +121,7 @@ $recent_loan = $result->fetch_assoc();
                         <h3 style="text-align: center;">Recent Transactions</h3>
                         <p style="margin-top: 10px; font-size: 30px; text-align: center;">
                             <?php
-                            $sql = "SELECT COUNT(*) AS total_transactions FROM loans";
+                            $sql = "SELECT COUNT(*) AS total_transactions FROM loans WHERE loan_status IN ('Approved', 'In Progress', 'Cleared')";
                             $result = $conn->query($sql);
                             $total_transactions = $result->fetch_assoc()['total_transactions'];
                             echo $total_transactions;
@@ -129,13 +129,18 @@ $recent_loan = $result->fetch_assoc();
                         </p>
                     </div>
                     <div class="dashboard-item">
-                        <h3 style="text-align: center;">Active Loans</h3>
+                        <h3 style="text-align: center;">Total Loans</h3>
                         <p style="margin-top: 10px; font-size: 30px; text-align: center;">
                             <?php
-                            $sql = "SELECT COUNT(*) AS active_loans FROM (SELECT * FROM loans WHERE loan_balance != 0 ORDER BY id DESC) AS recent_loans GROUP BY user_id";
+                            $sql = "SELECT COUNT(*) AS total_loans FROM (
+                                    SELECT * FROM (
+                                        SELECT * FROM loans WHERE loan_status IN ('Approved', 'Declined') AND loan_balance != 0 ORDER BY id DESC
+                                    ) AS recent_loans 
+                                    GROUP BY loan_type_id
+                                ) AS total_loans";
                             $result = $conn->query($sql);
-                            $active_loans = $result->num_rows;
-                            echo $active_loans;
+                            $total_loans = $result->fetch_assoc()['total_loans'];
+                            echo $total_loans;
                             ?>
                         </p>
                     </div>
@@ -143,7 +148,7 @@ $recent_loan = $result->fetch_assoc();
                         <h3 style="text-align: center;">Approved Loans</h3>
                         <p style="margin-top: 10px; font-size: 30px; text-align: center;">
                             <?php
-                            $sql = "SELECT COUNT(*) AS approved_loans FROM loans WHERE transaction_type = 'Loan' AND loan_status IN ('approved', 'in progress', 'cleared')";
+                            $sql = "SELECT COUNT(*) AS approved_loans FROM loans WHERE transaction_type = 'Loan' AND loan_status IN ('Approved')";
                             $result = $conn->query($sql);
                             $approved_loans = $result->fetch_assoc()['approved_loans'];
                             echo $approved_loans;
@@ -151,16 +156,41 @@ $recent_loan = $result->fetch_assoc();
                         </p>
                     </div>
                     <div class="dashboard-item">
-                        <h3 style="text-align: center;">Revenue Generated</h3>
+                        <h3 style="text-align: center;">Declined Loans</h3>
                         <p style="margin-top: 10px; font-size: 30px; text-align: center;">
                             <?php
-                            $sql = "SELECT SUM(revenue_generated) AS total_revenue_generated FROM loans";
+                            $sql = "SELECT COUNT(*) AS declined_loans FROM loans WHERE transaction_type = 'Loan' AND loan_status IN ('Declined')";
                             $result = $conn->query($sql);
-                            $row = $result->fetch_assoc();
-                            $revenue_generated = $row['total_revenue_generated'];
-                            echo "KES " . number_format($revenue_generated, 2); // Format as currency
+                            $declined_loans = $result->fetch_assoc()['declined_loans'];
+                            echo $declined_loans;
                             ?>
                         </p>
+                    </div>
+                    <div class="dashboard-item">
+                        <h3 style="text-align: center;">Cleared Loans</h3>
+                        <p style="margin-top: 10px; font-size: 30px; text-align: center;">
+                            <?php
+                            $sql = "SELECT COUNT(*) AS cleared_loans FROM loans WHERE transaction_type = 'Payment' AND loan_status IN ('Cleared')";
+                            $result = $conn->query($sql);
+                            $cleared_loans = $result->fetch_assoc()['cleared_loans'];
+                            echo $cleared_loans;
+                            ?>
+                        </p>
+                    </div>
+                    <div class="dashboard-item">
+                        <h3 style="text-align: center;">Total Revenue Generated</h3>
+                        <?php
+                        $sql = "SELECT SUM(revenue_generated) AS total_revenue FROM loans WHERE loan_status = 'Approved'";
+                        $result = $conn->query($sql);
+                        $row = $result->fetch_assoc();
+                        $total_revenue = $row['total_revenue'];
+
+                        if ($total_revenue > 0) {
+                            echo '<p style="margin-top: 10px; font-size: 30px; text-align: center;">KES ' . number_format($total_revenue, 2) . '</p>';
+                        } else {
+                            echo '<p>There is currently no revenue generated. Check again later.</p>';
+                        }
+                        ?>
                     </div>
                 </div>
                 <div class="dashboard-item">
@@ -170,26 +200,28 @@ $recent_loan = $result->fetch_assoc();
                     <?php else: ?>
                         <p style="margin-bottom: 10px;">Your recent transactions on loans and repayments:</p>
                         <?php foreach ($limit_loans as $loan): ?>
-                            <?php if ($loan['transaction_type'] == 'Loan'): ?>
-                                <p style="margin: 1px 0;">
-                                    <strong>
-                                        <?php echo $loan['transaction_type']; ?>
-                                    </strong> Approved --- <strong>KES
-                                        <?php echo $loan['loan_amount']; ?>
-                                    </strong> --- on <strong>
-                                        <?php echo $loan['date_of_transaction']; ?>
-                                    </strong>
-                                </p>
-                            <?php else: ?>
-                                <p style="margin: 1px 0;">
-                                    <strong>
-                                        <?php echo $loan['transaction_type']; ?>
-                                    </strong> Received --- <strong>KES
-                                        <?php echo $loan['payment_amount']; ?>
-                                    </strong> --- on <strong>
-                                        <?php echo $loan['payment_date']; ?>
-                                    </strong>
-                                </p>
+                            <?php if (in_array($loan['loan_status'], ['Approved', 'In Progress', 'Cleared'])): ?>
+                                <?php if ($loan['transaction_type'] == 'Loan'): ?>
+                                    <p style="margin: 1px 0;">
+                                        <strong>
+                                            <?php echo $loan['transaction_type']; ?>
+                                        </strong> Approved --- <strong>KES
+                                            <?php echo $loan['loan_amount']; ?>
+                                        </strong> --- on <strong>
+                                            <?php echo $loan['date_of_transaction']; ?>
+                                        </strong>
+                                    </p>
+                                <?php else: ?>
+                                    <p style="margin: 1px 0;">
+                                        <strong>
+                                            <?php echo $loan['transaction_type']; ?>
+                                        </strong> Received --- <strong>KES
+                                            <?php echo $loan['payment_amount']; ?>
+                                        </strong> --- on <strong>
+                                            <?php echo $loan['payment_date']; ?>
+                                        </strong>
+                                    </p>
+                                <?php endif; ?>
                             <?php endif; ?>
                         <?php endforeach; ?>
                     <?php endif; ?>
@@ -250,22 +282,27 @@ $recent_loan = $result->fetch_assoc();
                             echo "<span style='color:{$color};'>{$status}</span>";
                             ?>
                         </p>
-                        <form id="update-status-form" action="php/functions/update_status.php" method="POST"
-                            style="margin-top: 10px;">
-                            <label for="loan_status">Loan Status:</label>
-                            <select id="loan_status" name="loan_status" class="dashboard-input" required
+
+                        <?php
+                        $dropdown_loan_status = $loan['loan_status'];
+                        ?>
+
+                        <?php if (in_array($dropdown_loan_status, ['Pending', 'Under Review'])): ?>
+                            <form id="update-status-form" action="php/functions/update_status.php" method="POST"
                                 style="margin-top: 10px;">
-                                <option>Select Loan Status</option>
-                                <option value="Under Review">Under Review</option>
-                                <option value="Approved">Approved</option>
-                                <option value="Declined">Declined</option>
-                            </select>
-                            <input type="hiddenn" id="loan_type_id" name="loan_type_id"
-                                value="<?php echo $loan['loan_type_id']; ?>">
-                            <button class="repay-button">
-                                Update Status
-                            </button>
-                        </form>
+                                <label for="loan_status">Loan Status:</label>
+                                <select id="loan_status" name="loan_status" class="dashboard-input" required
+                                    style="margin-top: 10px;">
+                                    <option>Select Loan Status</option>
+                                    <option value="Under Review">Under Review</option>
+                                    <option value="Approved">Approved</option>
+                                    <option value="Declined">Declined</option>
+                                </select>
+                                <input type="hidden" id="loan_type_id" name="loan_type_id"
+                                    value="<?php echo $loan['loan_type_id']; ?>">
+                                <button class="repay-button">Update Status</button>
+                            </form>
+                        <?php endif; ?>
                     </div>
                 <?php endforeach; ?>
             </div>
@@ -278,10 +315,24 @@ $recent_loan = $result->fetch_assoc();
                 your timely repayments! Thank you for
                 your timely repayments!</p>
             <div class="loan-list">
-                <div class="dashboard-item">
-                    <h3>Regular Users</h3>
-                    <?php foreach ($all_users as $user): ?>
-                        <?php if ($user['admin'] == 'no'): ?>
+                <!-- Regular User -->
+                <?php
+                $regular_users = array_filter($all_users, function ($user) {
+                    return $user['admin'] == 'no';
+                });
+
+                if (empty($all_users)): ?>
+                    <div class="dashboard-item">
+                        <p>No users found in the database.</p>
+                    </div>
+                <?php elseif (empty($regular_users)): ?>
+                    <div class="dashboard-item">
+                        <p>No regular users found in the database.</p>
+                    </div>
+                <?php else: ?>
+                    <div class="dashboard-item">
+                        <h3>Regular Users</h3>
+                        <?php foreach ($regular_users as $user): ?>
                             <form action="php/functions/delete_user.php" method="POST" style="margin: 1px 0;">
                                 <strong>
                                     <?php echo $user['username']; ?>
@@ -291,13 +342,27 @@ $recent_loan = $result->fetch_assoc();
                                 <input type="hidden" id="id" name="id" value="<?php echo $user['id']; ?>">
                                 <button type="submit" class="repay-button" style="margin-left: 20px;">Delete User</button>
                             </form>
-                        <?php endif; ?>
-                    <?php endforeach; ?>
-                </div>
-                <div class="dashboard-item">
-                    <h3>Admin Users</h3>
-                    <?php foreach ($all_users as $user): ?>
-                        <?php if ($user['admin'] == 'yes'): ?>
+                        <?php endforeach; ?>
+                    </div>
+                <?php endif; ?>
+                <!-- Admin -->
+                <?php
+                $admin_users = array_filter($all_users, function ($user) {
+                    return $user['admin'] == 'yes';
+                });
+
+                if (empty($all_users)): ?>
+                    <div class="dashboard-item">
+                        <p>No users found in the database.</p>
+                    </div>
+                <?php elseif (empty($admin_users)): ?>
+                    <div class="dashboard-item">
+                        <p>No admin users found in the database.</p>
+                    </div>
+                <?php else: ?>
+                    <div class="dashboard-item">
+                        <h3>Admin Users</h3>
+                        <?php foreach ($admin_users as $user): ?>
                             <form action="php/functions/delete_user.php" method="POST" style="margin: 1px 0;">
                                 <strong>
                                     <?php echo $user['username']; ?>
@@ -307,9 +372,9 @@ $recent_loan = $result->fetch_assoc();
                                 <input type="hidden" id="id" name="id" value="<?php echo $user['id']; ?>">
                                 <button type="submit" class="repay-button" style="margin-left: 20px;">Delete Admin</button>
                             </form>
-                        <?php endif; ?>
-                    <?php endforeach; ?>
-                </div>
+                        <?php endforeach; ?>
+                    </div>
+                <?php endif; ?>
             </div>
         </section>
 

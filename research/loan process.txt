@@ -7,33 +7,10 @@
               	       in progress
               	       cleared
 
-pending - dont show in - user dashboard
-		       - repay loans
-		       - admin dashboard
-under review - dont show in - user dashboard
-			    - repay loans
-		            - admin dashboard
-declined - dont show in - user dashboard
-		        - repay loans
-		        - admin dashboard
-cleared - dont show in - active loans
-		       - manage loans - hide form
-
 
 2.redirection to admin_dashboard page when u update profile/password
 
 3.calculate maximum loan amount for overall user
-
-4.calculate total revenue using this=`// Fetch the most recent transaction for each loan type for the user
-$sql = "SELECT loans.* FROM loans 
-        INNER JOIN (
-            SELECT loan_type_id, MAX(id) AS max_id
-            FROM loans 
-            WHERE user_id = $user_id 
-            GROUP BY loan_type_id
-        ) AS max_loans ON loans.loan_type_id = max_loans.loan_type_id AND loans.id = max_loans.max_id ORDER BY id DESC";
-$result = $conn->query($sql);
-$loan_type_id_loans = $result->fetch_all(MYSQLI_ASSOC);`
 
 
 // contact page

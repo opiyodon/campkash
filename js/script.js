@@ -158,10 +158,11 @@ window.onload = function () {
     });
 };
 
-// restrict loan application based on loan balance
+// restrict loan application based on loan balance and loan status
 document.getElementById('loan-request-form').addEventListener('submit', function (e) {
     var lastLoanBalance = Number(document.getElementById('last_loan_balance').value);
-    if (lastLoanBalance > 0) {
+    var lastLoanStatus = document.getElementById('last_loan_status').value;
+    if (lastLoanBalance > 0 && lastLoanStatus != 'Declined') {
         e.preventDefault();
         alert('You need to clear your previous loan before requesting a new one');
     }

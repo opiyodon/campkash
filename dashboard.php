@@ -57,6 +57,12 @@ $loanBalance = isset($recent_loan['loan_balance']) ? $recent_loan['loan_balance'
 // Echo the loan balance as a JavaScript variable
 echo "<script>var loanBalance = {$loanBalance};</script>";
 
+// Check if loan_status is set and use it, or use 'Declined' if it's not
+$loanStatus = isset($recent_loan['loan_status']) ? $recent_loan['loan_status'] : 'Declined';
+
+// Echo the loan status as a JavaScript variable
+echo "<script>var loanStatus = '{$loanStatus}';</script>";
+
 // Fetch the most recent transaction for each loan type for the user
 $sql = "SELECT loans.* FROM loans 
         INNER JOIN (
@@ -157,26 +163,28 @@ $loan_type_id_loans = $result->fetch_all(MYSQLI_ASSOC);
                     <?php else: ?>
                         <p style="margin-bottom: 10px;">Your recent transactions on loans and repayments:</p>
                         <?php foreach ($limit_loans as $loan): ?>
-                            <?php if ($loan['transaction_type'] == 'Loan'): ?>
-                                <p style="margin: 1px 0;">
-                                    <strong>
-                                        <?php echo $loan['transaction_type']; ?>
-                                    </strong> Approved --- <strong>KES
-                                        <?php echo $loan['loan_amount']; ?>
-                                    </strong> --- on <strong>
-                                        <?php echo $loan['date_of_transaction']; ?>
-                                    </strong>
-                                </p>
-                            <?php else: ?>
-                                <p style="margin: 1px 0;">
-                                    <strong>
-                                        <?php echo $loan['transaction_type']; ?>
-                                    </strong> Received --- <strong>KES
-                                        <?php echo $loan['payment_amount']; ?>
-                                    </strong> --- on <strong>
-                                        <?php echo $loan['payment_date']; ?>
-                                    </strong>
-                                </p>
+                            <?php if (in_array($loan['loan_status'], ['Approved', 'In Progress', 'Cleared'])): ?>
+                                <?php if ($loan['transaction_type'] == 'Loan'): ?>
+                                    <p style="margin: 1px 0;">
+                                        <strong>
+                                            <?php echo $loan['transaction_type']; ?>
+                                        </strong> Approved --- <strong>KES
+                                            <?php echo $loan['loan_amount']; ?>
+                                        </strong> --- on <strong>
+                                            <?php echo $loan['date_of_transaction']; ?>
+                                        </strong>
+                                    </p>
+                                <?php else: ?>
+                                    <p style="margin: 1px 0;">
+                                        <strong>
+                                            <?php echo $loan['transaction_type']; ?>
+                                        </strong> Received --- <strong>KES
+                                            <?php echo $loan['payment_amount']; ?>
+                                        </strong> --- on <strong>
+                                            <?php echo $loan['payment_date']; ?>
+                                        </strong>
+                                    </p>
+                                <?php endif; ?>
                             <?php endif; ?>
                         <?php endforeach; ?>
                     <?php endif; ?>
@@ -184,24 +192,34 @@ $loan_type_id_loans = $result->fetch_all(MYSQLI_ASSOC);
 
                 <div class="dashboard-item">
                     <h3>Loan Balance</h3>
-                    <p>Your current outstanding loan balance is:
-                        <strong>KES
-                            <?php echo $recent_loan_balance; ?>
-                        </strong>
-                    </p>
-                    <div style="margin-top: 20px;">
-                        <canvas id="myChart"></canvas>
-                    </div>
+                    <?php if (isset($recent_loan) && in_array($recent_loan['loan_status'], ['Approved', 'In Progress', 'Cleared'])): ?>
+                        <p>Your current outstanding loan balance is: <strong>KES
+                                <?php echo $recent_loan_balance; ?>
+                            </strong></p>
+                        <div style="margin-top: 20px;">
+                            <canvas id="myChart"></canvas>
+                        </div>
+                    <?php else: ?>
+                        <p>You currently don't have any outstanding loan balance.</p>
+                    <?php endif; ?>
                 </div>
+
                 <div class="dashboard-item">
                     <h3>Next Repayment Date</h3>
-                    <p>Next scheduled repayment is on:
-                        <strong>
-                            <?php echo $recent_due_date; ?>
-                        </strong>
-                    </p>
+                    <?php if (isset($recent_loan) && in_array($recent_loan['loan_status'], ['Approved', 'In Progress', 'Cleared'])): ?>
+                        <?php if ($recent_loan_balance == 0): ?>
+                            <p>You have no outstanding loan balance, so there is no scheduled repayment date.</p>
+                        <?php else: ?>
+                            <p>Next scheduled repayment is on: <strong>
+                                    <?php echo $recent_due_date; ?>
+                                </strong></p>
+                        <?php endif; ?>
+                    <?php else: ?>
+                        <p>You currently don't have any scheduled repayments.</p>
+                    <?php endif; ?>
                 </div>
             </div>
+
         </section>
 
         <!-- Loan Summary Section -->
@@ -257,7 +275,7 @@ $loan_type_id_loans = $result->fetch_all(MYSQLI_ASSOC);
                     </div>
                 <?php else: ?>
                     <?php foreach ($loan_type_id_loans as $loan): ?>
-                        <?php if ($loan['loan_balance'] > 0): ?>
+                        <?php if (in_array($loan['loan_status'], ['Approved', 'In Progress'])): ?>
                             <div class="loan-item">
                                 <h3 style="margin-bottom: 5px;">
                                     <?php echo $loan['loan_type']; ?>
@@ -326,6 +344,8 @@ $loan_type_id_loans = $result->fetch_all(MYSQLI_ASSOC);
                 </select>
                 <input type="hidden" id="last_loan_balance" name="last_loan_balance"
                     value="<?php echo $recent_loan['loan_balance']; ?>">
+                <input type="hidden" id="last_loan_status" name="last_loan_status"
+                    value="<?php echo $recent_loan['loan_status']; ?>">
                 <button type="submit" class="request-button">Submit Request</button>
             </form>
         </section>
