@@ -366,6 +366,10 @@ $loan_type_id_loans = $result->fetch_all(MYSQLI_ASSOC);
                     $user_id = $_SESSION['user_id'];
                     // Fetch max_loan_amount for the user across all loan types
                     $max_loan_amount = getMaxLoanAmountForUser($user_id);
+                    if ($max_loan_amount === null) {
+                        $max_loan_amount = 1000;
+                    }
+
                     for ($i = 0; $i <= $max_loan_amount; $i += 1000) {
                         echo "<option value='$i'>KES $i</option>";
                     }

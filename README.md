@@ -26,7 +26,8 @@ CREATE TABLE users (
     gender VARCHAR(255),
     reg_no VARCHAR(255),
     dateofbirth DATE DEFAULT CURRENT_TIMESTAMP,
-    password VARCHAR(255)
+    password VARCHAR(255),
+    admin TEXT(11)
 );
 ```
 
@@ -34,11 +35,11 @@ CREATE TABLE users (
 
 ```bash
 CREATE TABLE loans (
-    id INT AUTO_INCREMENT,
+    id INT AUTO_INCREMENT PRIMARY KEY,
     user_id INT,
     transaction_type VARCHAR(255),
     loan_type VARCHAR(255),
-    loan_type_id INT,
+    loan_type_id VARCHAR(255),
     loan_amount DECIMAL(10, 2),
     max_loan_amount DECIMAL(10, 2),
     loan_status VARCHAR(255),
@@ -50,8 +51,7 @@ CREATE TABLE loans (
     loan_balance DECIMAL(10, 2),
     penalty DECIMAL(10, 2),
     interest DECIMAL(10, 2),
-    revenue_generated DECIMAL(10, 2),
-    PRIMARY KEY (id)
+    revenue_generated DECIMAL(10, 2)
 );
 ```
 

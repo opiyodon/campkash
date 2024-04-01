@@ -1,6 +1,0 @@
-/*================= todo =================*/
-3.calculate maximum loan amount for overall user
-
-
-// contact page
-1.contact form send email

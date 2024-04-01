@@ -8,14 +8,6 @@
     </div>
 </section>
 
-<?php
-if (isset($_SESSION['alert'])) {
-    $alert = $_SESSION['alert'];
-    echo "<script>displayAlert('{$alert['message']}', '{$alert['type']}');</script>";
-    unset($_SESSION['alert']); // Remove the alert from the session
-}
-?>
-
 <section class="contact" style="background: url('img/12.jpg') no-repeat center center; padding: 20px; background-size: cover;">
     <div class="container">
         <div class="contact-form">

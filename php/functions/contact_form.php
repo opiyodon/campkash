@@ -9,36 +9,41 @@ use PHPMailer\PHPMailer\Exception;
 
 include_once '../config.php'; // Include the database connection file
 
-$mail = new PHPMailer(true);
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Handle form data
+    $email = $_POST["email"];
+    $name = $_POST["name"];
+    $subject = $_POST["subject"];
+    $message = $_POST["message"];
 
-try {
-    // SMTP settings for Gmail
-    $mail->isSMTP();
-    $mail->Host = 'smtp.gmail.com';
-    $mail->SMTPAuth = true;
-    $mail->Username = 'ogitadeborah@gmail.com'; // SMTP username
-    $mail->Password = 'iqdn ldix ahst oneo';    // SMTP password
-    $mail->SMTPSecure = 'tls';
-    $mail->Port = 587;
+    // Send the email to the user
+    $mail = new PHPMailer(true);
 
-    // Sender's email (user's email entered in the contact form)
-    $userEmail = $_POST['email'];
-    $userName = $_POST['name'];
+    try {
+        // SMTP settings for Gmail
+        $mail->isSMTP();
+        $mail->Host = 'smtp.gmail.com';
+        $mail->SMTPAuth = true;
+        $mail->Username = 'ogitadeborah@gmail.com'; // SMTP username
+        $mail->Password = 'iqdn ldix ahst oneo';    // SMTP password
+        $mail->SMTPSecure = 'tls';
+        $mail->Port = 587;
 
-    // Recipients
-    $mail->setFrom($userEmail, $userName);
-    $mail->addAddress('ogitadeborah@gmail.com', 'campkash'); // Add a recipient
+        // Recipients
+        $mail->setFrom($email, $name);
+        $mail->addAddress('ogitadeborah@gmail.com', 'campkash'); // Add a recipient
 
-    // Content
-    $mail->isHTML(true);
-    $mail->Subject = $_POST['subject'];
-    $mail->Body = "Name: " . $userName . "<br>Email: " . $userEmail . "<br>Message: " . $_POST['message'];
+        // Content
+        $mail->isHTML(true);
+        $mail->Subject = $subject;
+        $mail->Body = "Name: " . $name . "<br>Email: " . $email . "<br>Message: " . $message;
 
-    $mail->send();
-} catch (Exception $e) {
-    $mail->ErrorInfo;
-} finally {
+        $mail->send();
+    } catch (Exception $e) {
+        $mail->ErrorInfo;
+    }
+
+    // Redirect to homepage
     header("Location: " . SITEURL . "contact.php");
-    exit();
+    exit(); // Stop further execution
 }
-
